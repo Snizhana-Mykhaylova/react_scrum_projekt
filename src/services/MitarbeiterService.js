@@ -14,6 +14,10 @@ class MitarbeiterService{
         return axios.get(trendingMovieUrl );
     }
 
+    speicherMitarbeiter(mitarbeiterData) {
+        return axios.post('http://localhost:5500/mitarbeiter', mitarbeiterData);
+    }
+
 }
 
 export default new MitarbeiterService();

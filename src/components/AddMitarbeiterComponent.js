@@ -1,6 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const AddMitarbeiterComponent = () => {
+    const [vorname, setVorname] = useState('');
+    const [nachname, setNachname] = useState('');
+    const [position, setPosition] = useState('');
+    const [telefon, setTelefon] = useState('');
+    const [plz, setPlz] = useState('');
+    const [ort, setOrt] = useState('');
+    const [strasse, setStrasse] = useState('');
+    const [hausNummer, setHausNummer] = useState('');
+    const [email, setEmail] = useState('');
+
+
+
+
+
   return (
     <div>
         <div className='container mt-5'>
@@ -16,19 +30,37 @@ const AddMitarbeiterComponent = () => {
                             <div className='form-group mb-2'>
                                 <input className='form-control' 
                                 type="text" placeholder='Nachname' />
-                            </div>
-                            <div className='form-group mb-2'>
+                              </div>
+                              <div className='form-group mb-2'>
                                 <input className='form-control' 
-                                type="email" placeholder='Email' />
-                            </div>
-                            <div className='form-group mb-2'>
+                                type="text" placeholder='Position' />
+                              </div>
+                              <div className='form-group mb-2'>
                                 <input className='form-control' 
                                 type="text" placeholder='Telefon' />
                             </div>
                             <div className='form-group mb-2'>
                                 <input className='form-control' 
-                                type="text" placeholder='Position' />
+                                type="email" placeholder='Email' />
+                              </div>
+                              <div className='form-group mb-2'>
+                                <input className='form-control' 
+                                type="text" placeholder='Plz' />
+                              </div>
+                              <div className='form-group mb-2'>
+                                <input className='form-control' 
+                                type="text" placeholder='Ort' />
+                              </div>
+                              <div className='form-group mb-2'>
+                                <input className='form-control' 
+                                type="text" placeholder='Strasse' />
+                              </div>
+                              <div className='form-group mb-2'>
+                                <input className='form-control' 
+                                type="text" placeholder='Haus Nummer' />
                             </div>
+                            
+                            
                             <button className='btn btn-success'>Speichern</button> {" "}
                             <a className='btn btn-danger' href="">Stornieren</a>
                         </form>

@@ -39,8 +39,11 @@ function getMitarbeiter() {
             <tr key={mitarbeiter.id} id={mitarbeiter.id}>
               <td>{mitarbeiter.id}</td>
               <td>{mitarbeiter.title}</td>
-              <td><a href=''>Bearbeiten</a></td>
-              <td><a>Löschen</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><a className='btn btn-info'>Bearbeiten</a></td>
+              <td><a className='btn btn-danger'href=''>Löschen</a></td>
               
             </tr>)}
 
