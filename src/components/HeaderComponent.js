@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import logo from '../img/logo.jpeg'
+
 const HeaderComponent = () => {
     return (
 <div>
@@ -26,7 +28,7 @@ const HeaderComponent = () => {
       
                     <a className="navbar-brand mt-2 mt-lg-0" href="#">
                         <img
-                            src="./view/img/WhatsApp Image 2024-02-06 at 12.30.24.jpeg"
+                            src={logo}
                             height="180"
                             alt="MDB Logo"
                             loading="lazy"

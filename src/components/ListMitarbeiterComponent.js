@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import MitarbeiterService from '../services/MitarbeiterService'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ListMitarbeiterComponent = () => {
 
@@ -13,9 +15,15 @@ const [MitarbeiterArray, setMitarbeiterArray] = useState([]);
 
 function getMitarbeiter() {
         MitarbeiterService.getMitarbeiter()
-          .then(res => { setMitarbeiterArray(res.data.results); console.log(res) })
+          .then(res => { setMitarbeiterArray(res.data)})
             .catch(e => console.log(e));
-    }
+  }
+  
+  function deleteMitarbeiter(e, id) {
+    e.preventDefault();
+    console.log(id);
+    MitarbeiterService.deleteMitarbeiter(id).then(window.location.reload(true)).catch(e => console.log(e));
+}
 
 
   return (
@@ -30,20 +38,27 @@ function getMitarbeiter() {
                 <th>Nachname</th>
                 <th>Email</th>
                 <th>Telefon</th>
+                <th>Adresse</th>
                 <th>Position</th>
-            <th>Actions</th>
+                <th>Actions</th>
           </tr>
             </thead>
         <tbody>
           {MitarbeiterArray.map(mitarbeiter =>
-            <tr key={mitarbeiter.id} id={mitarbeiter.id}>
-              <td>{mitarbeiter.id}</td>
-              <td>{mitarbeiter.title}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><a className='btn btn-info'>Bearbeiten</a></td>
-              <td><a className='btn btn-danger'href=''>Löschen</a></td>
+            <tr key={mitarbeiter.mitarbeiter_id} id={mitarbeiter.mitarbeiter_id}>
+              <td>{mitarbeiter.mitarbeiter_id}</td>
+              <td>{mitarbeiter.mitarbeiter_vorname}</td>
+              <td>{mitarbeiter.mitarbeiter_nachname}</td>
+              <td>{mitarbeiter.kd_email}</td>
+              <td>{mitarbeiter.kd_phone_nr}</td>
+              <td>{mitarbeiter.kd_ort} {mitarbeiter.kd_plz} {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}</td>
+              <td>{mitarbeiter.mitarbeiter_position}</td>
+              
+              <td className='action-td'>
+                
+                <Link to={ `/add-mitarbeiter/${mitarbeiter.mitarbeiter_id}`} className='btn btn-info'><EditIcon/></Link>
+                <a onClick={(e) => { deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id)}} className='btn btn-danger' href=''><DeleteIcon/></a>
+              </td>
               
             </tr>)}
 

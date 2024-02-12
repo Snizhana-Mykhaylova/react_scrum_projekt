@@ -1,1 +1,57 @@
+/*colors
+dark-Pink: #797391
+thin-light-blue: #cde0fa
+white: white
+black: black
+liner-bright-pink: #886fe8
+input-border: #7f7e82
+neumorphism-color: #b7b6ba
+*/
 
+body {
+    font-family: Roboto, sans-serif;
+    overflow-x: hidden;
+}
+
+
+.link {
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+
+.sectionTittel {
+    text-align: center;
+}
+
+.button {
+    color: black;
+    background: #cde0fa;
+}
+
+.kursCardList {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.kursCard {
+    margin-right: 25px;
+}
+
+.action-td{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    margin-bottom: 10px;
+}
