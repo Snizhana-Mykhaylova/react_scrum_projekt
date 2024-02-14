@@ -42,9 +42,9 @@ const HeaderComponent = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <Link to={"/teilnehmer"} className="nav-link" href="#">
                     Teilnehmer
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
