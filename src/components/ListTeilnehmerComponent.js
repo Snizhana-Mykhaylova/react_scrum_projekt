@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import MitarbeiterService from "../services/MitarbeiterService";
+import TeilnehmerService from "../services/TeilnehmerService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
-const ListMitarbeiterComponent = () => {
-  const [MitarbeiterArray, setMitarbeiterArray] = useState([]);
+const ListTeilnehmerComponent = () => {
+  const [TeilnehmerArray, setTeilnehmerArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getMitarbeiter();
+    getTeilnehmer();
   }, []);
 
-  function getMitarbeiter() {
-    MitarbeiterService.getMitarbeiter()
+  function getTeilnehmer() {
+    TeilnehmerService.getTeilnehmer()
       .then((res) => {
-        setMitarbeiterArray(res.data);
+        setTeilnehmerArray(res.data);
       })
       .catch((e) => console.log(e));
   }
 
-  function deleteMitarbeiter(e, id) {
+  function deleteTeilnehmer(e, id) {
     e.preventDefault();
     console.log(id);
-    MitarbeiterService.deleteMitarbeiter(id)
+    TeilnehmerService.deleteTeilnehmer(id)
       .then(window.location.reload(true))
       .catch((e) => console.log(e));
   }
@@ -49,7 +49,7 @@ const ListMitarbeiterComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Mitarbeiter</h2>
+      <h2 className="text-center mb-4">List Teilnehmer</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
@@ -64,36 +64,33 @@ const ListMitarbeiterComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {MitarbeiterArray.filter((item) => {
+          {TeilnehmerArray.filter((item) => {
             return search.toLowerCase() === ""
               ? item
-              : item.mitarbeiter_nachname.toLowerCase().includes(search);
-          }).map((mitarbeiter) => (
-            <tr
-              key={mitarbeiter.mitarbeiter_id}
-              id={mitarbeiter.mitarbeiter_id}
-            >
-              <td>{mitarbeiter.mitarbeiter_id}</td>
-              <td>{mitarbeiter.mitarbeiter_vorname}</td>
-              <td>{mitarbeiter.mitarbeiter_nachname}</td>
-              <td>{mitarbeiter.kd_email}</td>
-              <td>{mitarbeiter.kd_phone_nr}</td>
+              : item.teilnehmer_nachname.toLowerCase().includes(search);
+          }).map((teilnehmer) => (
+            <tr key={teilnehmer.teilnehmer_id} id={teilnehmer.teilnehmer_id}>
+              <td>{teilnehmer.teilnehmer_id}</td>
+              <td>{teilnehmer.teilnehmer_vorname}</td>
+              <td>{teilnehmer.teilnehmer_nachname}</td>
+              <td>{teilnehmer.kd_email}</td>
+              <td>{teilnehmer.kd_phone_nr}</td>
               <td>
-                {mitarbeiter.kd_ort} {mitarbeiter.kd_plz}{" "}
-                {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}
+                {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
+                {teilnehmer.kd_haus_nr}
               </td>
-              <td>{mitarbeiter.mitarbeiter_position}</td>
+              <td>{teilnehmer.teilnehmer_position}</td>
 
               <td>
                 <Link
-                  to={`/add-mitarbeiter/${mitarbeiter.mitarbeiter_id}`}
+                  to={`/add-teilnehmer/${teilnehmer.teilnehmer_id}`}
                   className="btn btn-info action"
                 >
                   <EditIcon />
                 </Link>
                 <a
                   onClick={(e) => {
-                    deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id);
+                    deleteTeilnehmer(e, teilnehmer.teilnehmer_id);
                   }}
                   className="btn btn-danger"
                   href=""
@@ -107,14 +104,14 @@ const ListMitarbeiterComponent = () => {
       </table>
 
       <Link
-        to={"/add-mitarbeiter"}
+        to={"/add-teilnehmer"}
         className="btn btn-primary mb-2 mt-3"
         href=""
       >
-        Add Mitarbeiter
+        Add Teilnehmer
       </Link>
     </div>
   );
 };
 
-export default ListMitarbeiterComponent;
+export default ListTeilnehmerComponent;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 import logo from '../img/logo.png'
 import profilelogo from '../img/profilelogo.png'
@@ -11,9 +11,19 @@ const HeaderComponent = () => {
         <div class="header">
         <div><img className="logo" src={logo}></img></div>
             <ul className="navlist">
-                <li><a href>Mitarbeiter</a></li>
-                <li><a href>Dozenten</a></li>
-                <li><a href>Dozenten</a></li>
+              <Link to={"/mitarbeiter"} className="nav-link" href="#">
+                    Mitarbeiter
+                  </Link>
+                   <Link to={"/teilnehmer"} className="nav-link" href="#">
+                    Teilnehmer
+                  </Link>
+<Link to={"/dozenten"} className="nav-link" href="#">
+                    Dozenten
+                  </Link>
+<Link to={"/kurse"} className="nav-link" href="#">
+                   Kurse
+                  </Link>
+
             </ul>
             
         <div class="header-right">
@@ -28,4 +38,5 @@ const HeaderComponent = () => {
     )
 }
 
-export default HeaderComponent
+
+export default HeaderComponent;

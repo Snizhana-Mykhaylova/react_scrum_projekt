@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import MitarbeiterService from "../services/MitarbeiterService";
+import TeilnehmerService from "../services/TeilnehmerService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const AddMitarbeiterComponent = () => {
+const AddTeilnehmerComponent = () => {
   const [vorname, setVorname] = useState("");
   const [nachname, setNachname] = useState("");
   const [position, setPosition] = useState("");
@@ -15,7 +15,7 @@ const AddMitarbeiterComponent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const mitarbeiterData = {
+  const teilnehmerData = {
     vorname,
     nachname,
     position,
@@ -29,13 +29,13 @@ const AddMitarbeiterComponent = () => {
 
   useEffect(() => {
     if (id) {
-      MitarbeiterService.getMitarbeiterById(id)
+      TeilnehmerService.getTeilnehmerById(id)
         .then((res) => {
           const {
-            mitarbeiter_vorname,
-            mitarbeiter_nachname,
-            mitarbeiter_position,
-          } = res.data.mitarbeiter[0];
+            teilnehmer_vorname,
+            teilnehmer_nachname,
+            teilnehmer_position,
+          } = res.data.teilnehmer[0];
           const {
             kd_email,
             kd_haus_nr,
@@ -44,9 +44,9 @@ const AddMitarbeiterComponent = () => {
             kd_straße,
             kd_phone_nr,
           } = res.data.kontaktDaten[0];
-          setVorname(mitarbeiter_vorname);
-          setNachname(mitarbeiter_nachname);
-          setPosition(mitarbeiter_position);
+          setVorname(teilnehmer_vorname);
+          setNachname(teilnehmer_nachname);
+          setPosition(teilnehmer_position);
           setTelefon(kd_phone_nr);
           setPlz(kd_plz);
           setOrt(kd_ort);
@@ -59,22 +59,22 @@ const AddMitarbeiterComponent = () => {
   }, []);
 
   // senden data zu api und navigate wenn alles gut
-  function speicherMitarbeiter(e) {
+  function speicherTeilnehmer(e) {
     e.preventDefault();
 
     if (
-      mitarbeiterData.vorname !== "" &&
-      mitarbeiterData.nachname !== "" &&
-      mitarbeiterData.email != ""
+      teilnehmerData.vorname !== "" &&
+      teilnehmerData.nachname !== "" &&
+      teilnehmerData.email != ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
-        MitarbeiterService.updateMitarbeiter(id, mitarbeiterData)
-          .then(navigate("/mitarbeiter"))
+        TeilnehmerService.updateTeilnehmer(id, teilnehmerData)
+          .then(navigate("/teilnehmer"))
           .catch((e) => console.log(e));
       } else {
-        MitarbeiterService.speicherMitarbeiter(mitarbeiterData)
-          .then(navigate("/mitarbeiter"))
+        TeilnehmerService.speicherTeilnehmer(teilnehmerData)
+          .then(navigate("/teilnehmer"))
           .catch((e) => console.log(e));
       }
     } else {
@@ -86,9 +86,9 @@ const AddMitarbeiterComponent = () => {
 
   function title() {
     if (id) {
-      return "Mitarbeiter bearbeiten";
+      return "Teilnehmer bearbeiten";
     } else {
-      return "Mitarbeiter hinzufügen";
+      return "Teilnehmer hinzufügen";
     }
   }
 
@@ -182,12 +182,12 @@ const AddMitarbeiterComponent = () => {
                   />
                 </div>
                 <button
-                  onClick={(e) => speicherMitarbeiter(e)}
+                  onClick={(e) => speicherTeilnehmer(e)}
                   className="btn btn-success"
                 >
                   Speichern
                 </button>{" "}
-                <Link to={"/mitarbeiter"} className="btn btn-danger" href="">
+                <Link to={"/teilnehmer"} className="btn btn-danger" href="">
                   Stornieren
                 </Link>
               </form>
@@ -199,4 +199,4 @@ const AddMitarbeiterComponent = () => {
   );
 };
 
-export default AddMitarbeiterComponent;
+export default AddTeilnehmerComponent;
