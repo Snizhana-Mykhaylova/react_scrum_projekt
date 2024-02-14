@@ -26,6 +26,9 @@ section {
     padding-top: 150px;
     padding-bottom: 150px;
 }
+.container{
+    padding: 25px;
+}
 
 .sectionTittel {
     text-align: center;
@@ -47,9 +50,8 @@ section {
     margin-right: 25px;
 }
 
-.action-td{
-    display: flex;
-    flex-direction: column;
+.action{
+    margin-right: 10px;
 }
 
 .btn {

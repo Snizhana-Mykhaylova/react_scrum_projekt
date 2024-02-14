@@ -3,6 +3,7 @@ import MitarbeiterService from '../services/MitarbeiterService';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const AddMitarbeiterComponent = () => {
+
     const [vorname, setVorname] = useState('');
     const [nachname, setNachname] = useState('');
     const [position, setPosition] = useState('');
@@ -10,36 +11,55 @@ const AddMitarbeiterComponent = () => {
     const [plz, setPlz] = useState('');
     const [ort, setOrt] = useState('');
     const [strasse, setStrasse] = useState('');
-    const [ hause_nr , setHausNummer] = useState('');
+    const [hause_nr , setHausNummer] = useState('');
     const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
   
 
 
-  const mitarbeiterData = { vorname, nachname, position, phone, plz, ort, strasse, email,  hause_nr };
+  const mitarbeiterData = { vorname, nachname, position, phone, plz, ort, strasse, email, hause_nr };
+  
+   useEffect(() => {
+    if (id) {
+      MitarbeiterService.getMitarbeiterById(id)
+        .then(res => {
+          const{mitarbeiter_vorname, mitarbeiter_nachname, mitarbeiter_position } = res.data.mitarbeiter[0];
+        const{kd_email, kd_haus_nr, kd_ort, kd_plz, kd_straße,kd_phone_nr } = res.data.kontaktDaten[0];
+          setVorname(mitarbeiter_vorname);
+          setNachname(mitarbeiter_nachname);
+          setPosition(mitarbeiter_position);
+          setTelefon(kd_phone_nr);
+          setPlz(kd_plz);
+          setOrt(kd_ort);
+          setStrasse(kd_straße);
+          setHausNummer(kd_haus_nr);
+          setEmail(kd_email);
+          })
+        .catch(e => console.log(e))
+    }
+    
+  }, []);
 
   // senden data zu api und navigate wenn alles gut
   function speicherMitarbeiter(e) {
     e.preventDefault();
 
- if (mitarbeiterData.vorname !== "" && mitarbeiterData.nachname !== "" && mitarbeiterData.email != "") {
-            /**If id is present in the parameter, it should update else it should save */
-            if (id) {
-                MitarbeiterService.updateMitarbeiter(id, mitarbeiterData)
-                    .then(navigate("/Mitarbeiter"))
-                    .catch(e => console.log(e));
-            } else {
-                MitarbeiterService.speicherMitarbeiter(mitarbeiterData)
-                .then(navigate("/mitarbeiter"))
-                .catch(e=>console.log(e))
-            }
-
-        } else {
-            alert("Please, fill in all inputes");
+    if (mitarbeiterData.vorname !== "" && mitarbeiterData.nachname !== "" && mitarbeiterData.email != "") {
+      /**If id is present in the parameter, it should update else it should save */
+      if (id) {
+        MitarbeiterService.updateMitarbeiter(id, mitarbeiterData)
+        .then(navigate("/mitarbeiter"))
+        .catch(e => console.log(e));
+      } else {
+          MitarbeiterService.speicherMitarbeiter(mitarbeiterData)
+          .then(navigate("/mitarbeiter"))
+          .catch(e=>console.log(e))
         }
 
-    
+    } else {
+      alert("Please, fill in all inputes");
+    }
 
   }
   
@@ -53,25 +73,7 @@ return "Mitarbeiter bearbeiten"
     }
   }
 
-  useEffect(() => {
-    if (id) {
-      MitarbeiterService.getMitarbeiterById(id)
-        .then(res =>{
-          console.log(res)
-          setVorname(res.data.mitarbeiter.mitarbeiter_vorname);
-          setNachname(res.data.mitarbeiter.mitarbeiter_nachname);
-          setPosition(res.data.mitarbeiter.mitarbeiter_position);
-          setTelefon(res.data.mitarbeiter.mkd_phone_nr);
-          setPlz(res.data.kontaktDaten.kd_plz);
-          setOrt(res.data.kontaktDaten.kd_ort);
-          setStrasse(res.data.kontaktDaten.kd_straß);
-          setHausNummer(res.data.kontaktDaten.kd_straß);
-          setEmail(res.data.kontaktDaten.kd_email);
-          })
-        .catch(e => console.log(e))
-    }
-    
-  }, []);
+
 
   return (
     <div>
