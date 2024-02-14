@@ -55,3 +55,68 @@ section {
 .btn {
     margin-bottom: 10px;
 }
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    
+}
+
+.header-right {
+ display: flex;
+ flex-direction: column;
+justify-content: center;
+ align-items: center;
+
+    
+}
+
+.logo {
+    display:block;
+    text-align: left;
+    width: 140px;
+    height: 110px;
+    border-radius: 23%;
+    
+    margin-left: -50px;
+
+}
+
+.navlist {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 350px;
+    margin-bottom: 0px;
+    color: white;
+
+}
+
+.navlist>li:hover{
+    color: #f28c5c;
+
+}
+
+.profileLogo {
+    
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
+
+.logintext {
+
+    padding-left: 5.5px;
+    color: white;
+}
+
+.headerbackground {
+    background: rgb(37,205,172);
+    background: linear-gradient(90deg, rgba(37,205,172,1) 0%, rgba(75,235,199,1) 0%, rgba(63,154,174,1) 67%);
+
+}
