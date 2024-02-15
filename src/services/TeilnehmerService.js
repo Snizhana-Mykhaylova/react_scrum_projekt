@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const link = "http://localhost:5500";
+const link = "http://172.16.201.175:5500";
 
 // const basicUrl = 'https://api.themoviedb.org/3/';
 // const key = '8e2d6c50ec8673fce37d0988f16fea97';
