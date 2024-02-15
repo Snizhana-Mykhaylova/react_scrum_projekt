@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logo from '../img/logo.png'
-import profilelogo from '../img/profilelogo.png'
+import logo from "../img/logo.png";
+import profilelogo from "../img/profilelogo.png";
 
 const HeaderComponent = () => {
-    return (
-        <div className="headerbackground">  
-<div className="container">
+  return (
+    <div className="headerbackground">
+      <div className="container">
         <div class="header">
+
             <div>
               <Link to={"/"}><img className="logo" src={logo}></img></Link>
             </div>
@@ -26,19 +27,16 @@ const HeaderComponent = () => {
                    Kurse
                   </Link>
 
-            </ul>
-            
-        <div class="header-right">
-                <a href><img className="profileLogo" src= {profilelogo}></img><span className="logintext">Login</span></a>
+          <div class="header-right">
+            <Link to={"/login"}>
+              <img className="profileLogo" src={profilelogo}></img>
+              <span className="logintext">Login</span>
+            </Link>
+          </div>
         </div>
-        
-        
-        
-        </div>
-</div>
-</div>
-    )
-}
-
+      </div>
+    </div>
+  );
+};
 
 export default HeaderComponent;
