@@ -5,7 +5,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 const AddTeilnehmerComponent = () => {
   const [vorname, setVorname] = useState("");
   const [nachname, setNachname] = useState("");
-  const [position, setPosition] = useState("");
   const [phone, setTelefon] = useState("");
   const [plz, setPlz] = useState("");
   const [ort, setOrt] = useState("");
@@ -18,7 +17,6 @@ const AddTeilnehmerComponent = () => {
   const teilnehmerData = {
     vorname,
     nachname,
-    position,
     phone,
     plz,
     ort,
@@ -34,7 +32,6 @@ const AddTeilnehmerComponent = () => {
           const {
             teilnehmer_vorname,
             teilnehmer_nachname,
-            teilnehmer_position,
           } = res.data.teilnehmer[0];
           const {
             kd_email,
@@ -46,7 +43,6 @@ const AddTeilnehmerComponent = () => {
           } = res.data.kontaktDaten[0];
           setVorname(teilnehmer_vorname);
           setNachname(teilnehmer_nachname);
-          setPosition(teilnehmer_position);
           setTelefon(kd_phone_nr);
           setPlz(kd_plz);
           setOrt(kd_ort);
@@ -116,15 +112,6 @@ const AddTeilnehmerComponent = () => {
                     onChange={(e) => setNachname(e.target.value)}
                     type="text"
                     placeholder="Nachname"
-                  />
-                </div>
-                <div className="form-group mb-2">
-                  <input
-                    className="form-control"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}
-                    type="text"
-                    placeholder="Position"
                   />
                 </div>
                 <div className="form-group mb-2">

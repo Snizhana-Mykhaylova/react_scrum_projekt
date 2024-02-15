@@ -22,11 +22,12 @@ class TeilnehmerService {
   }
 
   updateTeilnehmer(id, teilnehmerData) {
-    return axios.put(`${link}/update_teilnehmer/${id}`, teilnehmerData);
+    return axios.put(`${link}/update_TN/${id}`, teilnehmerData);
   }
 
   deleteTeilnehmer(id) {
-    return axios.delete(`${link}/delete_teilnehmer/${id}`);
+    console.log("service delete" + id)
+    return axios.delete(`${link}/delete_tn/${id}`);
   }
 }
 

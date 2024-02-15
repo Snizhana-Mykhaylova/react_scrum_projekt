@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TeilnehmerService from "../services/TeilnehmerService";
+import KursService from "../services/KursService";
+// import DozentenService from "../services/DozentenService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
-const ListTeilnehmerComponent = () => {
-  const [TeilnehmerArray, setTeilnehmerArray] = useState([]);
+const ListKursComponent = () => {
+  const [KursArray, setKursArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getTeilnehmer();
+    getKurs();
   }, []);
 
-  function getTeilnehmer() {
-    TeilnehmerService.getTeilnehmer()
+  function getKurs() {
+    KursService.getKurs()
       .then((res) => {
-        setTeilnehmerArray(res.data);
+        setKursArray(res.data);
       })
       .catch((e) => console.log(e));
   }
 
-  function deleteTeilnehmer(e, id) {
+  function deleteKurs(e, id) {
     e.preventDefault();
     console.log(id);
-    TeilnehmerService.deleteTeilnehmer(id)
+    KursService.deleteKurs(id)
       .then(window.location.reload(true))
       .catch((e) => console.log(e));
   }
@@ -49,50 +50,49 @@ const ListTeilnehmerComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Teilnehmer</h2>
+      <h2 className="text-center mb-4">List Kurs</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Adresse</th>
-            <th>Actions</th>
+            <th>Name</th>
+            <th>Beschreibung</th>
+            <th>Start</th>
+            <th>Ende</th>
+            <th>Dozenten ID</th>
+            <th>Dozenten Vorname</th>
+            <th>Dozenten Nachname</th>
           </tr>
         </thead>
         <tbody>
-          {TeilnehmerArray.filter((item) => {
+          {KursArray.filter((item) => {
             return search.toLowerCase() === ""
               ? item
-              : item.teilnehmer_nachname.toLowerCase().includes(search);
-          }).map((teilnehmer) => (
-            <tr key={teilnehmer.teilnehmer_id} id={teilnehmer.teilnehmer_id}>
-              <td>{teilnehmer.teilnehmer_id}</td>
-              <td>{teilnehmer.teilnehmer_vorname}</td>
-              <td>{teilnehmer.teilnehmer_nachname}</td>
-              <td>{teilnehmer.kd_email}</td>
-              <td>{teilnehmer.kd_phone_nr}</td>
-              <td>
-                {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
-                {teilnehmer.kd_haus_nr}
-              </td>
+              : item.kurs_nachname.toLowerCase().includes(search);
+          }).map((kurs) => (
+            <tr key={kurs.kurs_id} id={kurs.kurs_id}>
+              <td>{kurs.kurs_id}</td>
+              <td>{kurs.kurs_name}</td>
+              <td>{kurs.kurs_beschreibung}</td>
+              <td>{kurs.kurs_start_datum}</td>
+              <td>{kurs.kurs_end_datum}</td>
+              <td>{kurs.fk_dozent_id}</td>
+              <td>{}</td>
+              <td>{}</td>
 
               <td>
                 <Link
-                  to={`/add-teilnehmer/${teilnehmer.teilnehmer_id}`}
+                  to={`/add-kurs/${kurs.kurs_id}`}
                   className="btn btn-info action"
                 >
                   <EditIcon />
                 </Link>
                 <a
                   onClick={(e) => {
-                    console.log(e, teilnehmer.teilnehmer_id);
-                    deleteTeilnehmer(e, teilnehmer.teilnehmer_id);
+                    deleteKurs(e, kurs.kurs_id);
                   }}
                   className="btn btn-danger"
-               
+                  href=""
                 >
                   <DeleteIcon />
                 </a>
@@ -102,15 +102,11 @@ const ListTeilnehmerComponent = () => {
         </tbody>
       </table>
 
-      <Link
-        to={"/add-teilnehmer"}
-        className="btn btn-primary mb-2 mt-3"
-        href=""
-      >
-        Add Teilnehmer
+      <Link to={"/add-kurs"} className="btn btn-primary mb-2 mt-3" href="">
+        Add Kurs
       </Link>
     </div>
   );
 };
 
-export default ListTeilnehmerComponent;
+export default ListKursComponent;
