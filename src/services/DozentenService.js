@@ -2,7 +2,7 @@ import axios from "axios";
 
 const link = "http://172.16.201.175:5500";
 
-class dozentenService {
+class DozentenService {
   getdozenten() {
     return axios.get(link + "/get_dozent");
   }
@@ -18,7 +18,7 @@ class dozentenService {
   }
 
   updatedozenten(id, dozentenData) {
-    return axios.put(`${link}/update_dozent/${id}`, dozentenData);
+    return axios.put(`${link}/dozent_update/${id}`, dozentenData);
   }
 
   deletedozenten(id) {
@@ -26,4 +26,4 @@ class dozentenService {
   }
 }
 
-export default new dozentenService();
+export default new DozentenService ();

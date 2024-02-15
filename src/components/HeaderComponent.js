@@ -9,7 +9,9 @@ const HeaderComponent = () => {
         <div className="headerbackground">  
 <div className="container">
         <div class="header">
-        <div><img className="logo" src={logo}></img></div>
+            <div>
+              <Link to={"/"}><img className="logo" src={logo}></img></Link>
+            </div>
             <ul className="navlist">
               <Link to={"/mitarbeiter"} className="nav-link" href="#">
                     Mitarbeiter

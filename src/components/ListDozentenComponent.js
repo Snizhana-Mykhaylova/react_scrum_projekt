@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import MitarbeiterService from "../services/MitarbeiterService";
+import DozentenService from "../services/DozentenService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
-const ListMitarbeiterComponent = () => {
-  const [MitarbeiterArray, setMitarbeiterArray] = useState([]);
+const ListDozentenComponent = () => {
+  const [dozentenArray, setdozentenArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getMitarbeiter();
+    getdozenten();
   }, []);
 
-  function getMitarbeiter() {
-    MitarbeiterService.getMitarbeiter()
+  function getdozenten() {
+     DozentenService.getdozenten()
       .then((res) => {
-        setMitarbeiterArray(res.data);
+        setdozentenArray(res.data);
+        console.log(res)
       })
       .catch((e) => console.log(e));
   }
 
-  function deleteMitarbeiter(e, id) {
+  function deletedozenten(e, id) {
     e.preventDefault();
     console.log(id);
-    MitarbeiterService.deleteMitarbeiter(id)
+     DozentenService.deletedozenten(id)
       .then(window.location.reload(true))
       .catch((e) => console.log(e));
   }
@@ -49,7 +50,7 @@ const ListMitarbeiterComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Mitarbeiter</h2>
+      <h2 className="text-center mb-4">Dozenten</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
@@ -59,41 +60,41 @@ const ListMitarbeiterComponent = () => {
             <th>Email</th>
             <th>Telefon</th>
             <th>Adresse</th>
-            <th>Position</th>
+            <th>Fachgebiet</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {MitarbeiterArray.filter((item) => {
+          {dozentenArray.filter((item) => {
             return search.toLowerCase() === ""
               ? item
-              : item.mitarbeiter_nachname.toLowerCase().includes(search);
-          }).map((mitarbeiter) => (
+              : item.dozent_nachname.toLowerCase().includes(search);
+          }).map((dozenten) => (
             <tr
-              key={mitarbeiter.mitarbeiter_id}
-              id={mitarbeiter.mitarbeiter_id}
+              key={dozenten.dozent_id}
+              id={dozenten.dozent_id}
             >
-              <td>{mitarbeiter.mitarbeiter_id}</td>
-              <td>{mitarbeiter.mitarbeiter_vorname}</td>
-              <td>{mitarbeiter.mitarbeiter_nachname}</td>
-              <td>{mitarbeiter.kd_email}</td>
-              <td>{mitarbeiter.kd_phone_nr}</td>
+              <td>{dozenten.dozent_id}</td>
+              <td>{dozenten.dozent_vorname}</td>
+              <td>{dozenten.dozent_nachname}</td>
+              <td>{dozenten.kd_email}</td>
+              <td>{dozenten.kd_phone_nr}</td>
               <td>
-                {mitarbeiter.kd_ort} {mitarbeiter.kd_plz}{" "}
-                {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}
+                {dozenten.kd_ort} {dozenten.kd_plz}{" "}
+                {dozenten.kd_straße} {dozenten.kd_haus_nr}
               </td>
-              <td>{mitarbeiter.mitarbeiter_position}</td>
+              <td>{dozenten.dozent_fachgebiet}</td>
 
               <td>
                 <Link
-                  to={`/add-mitarbeiter/${mitarbeiter.mitarbeiter_id}`}
+                  to={`/add-dozenten/${dozenten.dozent_id}`}
                   className="btn btn-info action"
                 >
                   <EditIcon />
                 </Link>
                 <a
                   onClick={(e) => {
-                    deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id);
+                    deletedozenten(e, dozenten.dozent_id);
                   }}
                   className="btn btn-danger"
                   href=""
@@ -107,14 +108,14 @@ const ListMitarbeiterComponent = () => {
       </table>
 
       <Link
-        to={"/add-mitarbeiter"}
+        to={"/add-dozenten"}
         className="btn btn-primary mb-2 mt-3"
         href=""
       >
-        Add Mitarbeiter
+        Add dozenten
       </Link>
     </div>
   );
 };
 
-export default ListMitarbeiterComponent;
+export default ListDozentenComponent;
