@@ -9,23 +9,23 @@ const HeaderComponent = () => {
     <div className="headerbackground">
       <div className="container">
         <div class="header">
-          <div>
-            <img className="logo" src={logo}></img>
-          </div>
-          <ul className="navlist">
-            <Link to={"/mitarbeiter"} className="nav-link" href="#">
-              Mitarbeiter
-            </Link>
-            <Link to={"/teilnehmer"} className="nav-link" href="#">
-              Teilnehmer
-            </Link>
-            <Link to={"/dozenten"} className="nav-link" href="#">
-              Dozenten
-            </Link>
-            <Link to={"/kurse"} className="nav-link" href="#">
-              Kurse
-            </Link>
-          </ul>
+
+            <div>
+              <Link to={"/"}><img className="logo" src={logo}></img></Link>
+            </div>
+            <ul className="navlist">
+              <Link to={"/mitarbeiter"} className="nav-link" href="#">
+                    Mitarbeiter
+                  </Link>
+                   <Link to={"/teilnehmer"} className="nav-link" href="#">
+                    Teilnehmer
+                  </Link>
+<Link to={"/dozenten"} className="nav-link" href="#">
+                    Dozenten
+                  </Link>
+<Link to={"/kurse"} className="nav-link" href="#">
+                   Kurse
+                  </Link>
 
           <div class="header-right">
             <Link to={"/login"}>
