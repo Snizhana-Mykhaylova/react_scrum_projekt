@@ -5,6 +5,7 @@ import ListMitarbeiterComponent from "./components/ListMitarbeiterComponent";
 import AddMitarbeiterComponent from "./components/AddMitarbeiterComponent";
 import ListTeilnehmerComponent from "./components/ListTeilnehmerComponent";
 import AddTeilnehmerComponent from "./components/AddTeilnehmerComponent";
+import LoginComponent from "./components/LoginComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <HeaderComponent />
         <div className="container">
           <Routes>
+            <Route path='/login'element={<LoginComponent />}></Route>
             <Route path="/" element={<MainComponent />} />
             <Route path="/mitarbeiter" element={<ListMitarbeiterComponent />} />
             <Route path="/teilnehmer" element={<ListTeilnehmerComponent />} />
