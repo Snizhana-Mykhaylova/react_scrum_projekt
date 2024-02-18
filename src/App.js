@@ -9,6 +9,7 @@ import ListDozentComponent from "./components/ListDozentComponent";
 import AddDozentComponent from "./components/AddDozentComponent";
 import ListKursComponent from "./components/ListKursComponents";
 import AddKursComponent from "./components/AddKursComponents";
+import LoginComponent from "./components/LoginComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,11 +19,13 @@ function App() {
         <HeaderComponent />
         <div className="container">
           <Routes>
+            <Route path='/login'element={<LoginComponent />}></Route>
             <Route path="/" element={<MainComponent />} />
             <Route path="/mitarbeiter" element={<ListMitarbeiterComponent />} />
             <Route path="/teilnehmer" element={<ListTeilnehmerComponent />} />
             <Route path="/kurse" element={<ListKursComponent />} />
             <Route path="/dozenten" element={<ListDozentComponent />} />
+
             <Route
               path="/add-mitarbeiter"
               element={<AddMitarbeiterComponent />}
