@@ -10,7 +10,7 @@ const HeaderComponent = () => {
       <div className="container">
         <div class="header">
           <div>
-            <img className="logo" src={logo}></img>
+            <img className="logo" src={logo} alt=""></img>
           </div>
           <ul className="navlist">
             <Link to={"/mitarbeiter"} className="nav-link" href="#">
@@ -29,7 +29,7 @@ const HeaderComponent = () => {
 
           <div class="header-right">
             <a href>
-              <img className="profileLogo" src={profilelogo}></img>
+              <img className="profileLogo" src={profilelogo} alt=""></img>
               <span className="logintext">Login</span>
             </a>
           </div>

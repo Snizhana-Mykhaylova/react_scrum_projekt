@@ -8,12 +8,12 @@ const link = "http://localhost:5500";
 
 class KursService {
   getKurs() {
-    return axios.get(link + "/get_kurs_info");
+    return axios.get(link + "/getAll_kurs");
   }
 
   getKursById(id) {
     console.log(id);
-    return axios.get(`${link}/get_kurs_info/${id}`);
+    return axios.get(`${link}/getAll_kurs/${id}`);
   }
 
   speicherKurs(kursData) {
@@ -30,4 +30,6 @@ class KursService {
   }
 }
 
-export default new KursService();
+var kursService = new KursService();
+
+export default kursService;

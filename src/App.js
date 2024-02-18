@@ -5,6 +5,8 @@ import ListMitarbeiterComponent from "./components/ListMitarbeiterComponent";
 import AddMitarbeiterComponent from "./components/AddMitarbeiterComponent";
 import ListTeilnehmerComponent from "./components/ListTeilnehmerComponent";
 import AddTeilnehmerComponent from "./components/AddTeilnehmerComponent";
+import ListDozentComponent from "./components/ListDozentComponent";
+import AddDozentComponent from "./components/AddDozentComponent";
 import ListKursComponent from "./components/ListKursComponents";
 import AddKursComponent from "./components/AddKursComponents";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,6 +22,7 @@ function App() {
             <Route path="/mitarbeiter" element={<ListMitarbeiterComponent />} />
             <Route path="/teilnehmer" element={<ListTeilnehmerComponent />} />
             <Route path="/kurse" element={<ListKursComponent />} />
+            <Route path="/dozenten" element={<ListDozentComponent />} />
             <Route
               path="/add-mitarbeiter"
               element={<AddMitarbeiterComponent />}
@@ -36,6 +39,8 @@ function App() {
               path="/add-teilnehmer/:id"
               element={<AddTeilnehmerComponent />}
             />
+            <Route path="/add-dozent" element={<AddDozentComponent />} />
+            <Route path="/add-dozent/:id" element={<AddDozentComponent />} />
             <Route path="/add-kurs" element={<AddKursComponent />} />
             <Route path="/add-kurs/:id" element={<AddKursComponent />} />
           </Routes>

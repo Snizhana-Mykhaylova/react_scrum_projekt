@@ -91,7 +91,7 @@ const ListMitarbeiterComponent = () => {
                 >
                   <EditIcon />
                 </Link>
-                <a
+                <Link
                   onClick={(e) => {
                     deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id);
                   }}
@@ -99,7 +99,7 @@ const ListMitarbeiterComponent = () => {
                   href=""
                 >
                   <DeleteIcon />
-                </a>
+                </Link>
               </td>
             </tr>
           ))}

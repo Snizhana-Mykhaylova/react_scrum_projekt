@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import KursService from "../services/KursService";
-// import DozentenService from "../services/DozentenService";
+import DozentService from "../services/DozentService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
 const ListKursComponent = () => {
-  const [KursArray, setKursArray] = useState([]);
+  const [kursArray, setKursArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -62,43 +62,46 @@ const ListKursComponent = () => {
             <th>Dozenten ID</th>
             <th>Dozenten Vorname</th>
             <th>Dozenten Nachname</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {KursArray.filter((item) => {
-            return search.toLowerCase() === ""
-              ? item
-              : item.kurs_nachname.toLowerCase().includes(search);
-          }).map((kurs) => (
-            <tr key={kurs.kurs_id} id={kurs.kurs_id}>
-              <td>{kurs.kurs_id}</td>
-              <td>{kurs.kurs_name}</td>
-              <td>{kurs.kurs_beschreibung}</td>
-              <td>{kurs.kurs_start_datum}</td>
-              <td>{kurs.kurs_end_datum}</td>
-              <td>{kurs.fk_dozent_id}</td>
-              <td>{}</td>
-              <td>{}</td>
+          {kursArray
+            .filter((item) => {
+              return search.toLowerCase() === ""
+                ? item
+                : item.kurs_nachname.toLowerCase().includes(search);
+            })
+            .map((kurs) => (
+              <tr key={kurs.kurs_id} id={kurs.kurs_id}>
+                <td>{kurs.kurs_id}</td>
+                <td>{kurs.kurs_name}</td>
+                <td>{kurs.kurs_beschreibung}</td>
+                <td>{kurs.kurs_start_datum}</td>
+                <td>{kurs.kurs_end_datum}</td>
+                <td>{kurs.fk_dozent_id}</td>
+                <td>{}</td>
+                <td>{}</td>
 
-              <td>
-                <Link
-                  to={`/add-kurs/${kurs.kurs_id}`}
-                  className="btn btn-info action"
-                >
-                  <EditIcon />
-                </Link>
-                <a
-                  onClick={(e) => {
-                    deleteKurs(e, kurs.kurs_id);
-                  }}
-                  className="btn btn-danger"
-                  href=""
-                >
-                  <DeleteIcon />
-                </a>
-              </td>
-            </tr>
-          ))}
+                <td>
+                  <Link
+                    to={`/add-kurs/${kurs.kurs_id}`}
+                    className="btn btn-info action"
+                  >
+                    <EditIcon />
+                  </Link>
+                  <Link
+                    onClick={(e) => {
+                      deleteKurs(e, kurs.kurs_id);
+                    }}
+                    className="btn btn-danger"
+                    href=""
+                  >
+                    <DeleteIcon />
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 

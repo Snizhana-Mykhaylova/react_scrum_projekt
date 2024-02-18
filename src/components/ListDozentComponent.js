@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TeilnehmerService from "../services/TeilnehmerService";
+import DozentService from "../services/DozentService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
-const ListTeilnehmerComponent = () => {
-  const [TeilnehmerArray, setTeilnehmerArray] = useState([]);
+const ListDozentComponent = () => {
+  const [DozentArray, setDozentArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getTeilnehmer();
+    getDozent();
   }, []);
 
-  function getTeilnehmer() {
-    TeilnehmerService.getTeilnehmer()
+  function getDozent() {
+    DozentService.getDozent()
       .then((res) => {
-        setTeilnehmerArray(res.data);
+        setDozentArray(res.data);
       })
       .catch((e) => console.log(e));
   }
 
-  function deleteTeilnehmer(e, id) {
+  function deleteDozent(e, id) {
     e.preventDefault();
     console.log(id);
-    TeilnehmerService.deleteTeilnehmer(id)
+    DozentService.deleteDozent(id)
       .then(window.location.reload(true))
       .catch((e) => console.log(e));
   }
@@ -49,7 +49,7 @@ const ListTeilnehmerComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Teilnehmer</h2>
+      <h2 className="text-center mb-4">List Dozent</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
@@ -59,39 +59,41 @@ const ListTeilnehmerComponent = () => {
             <th>Email</th>
             <th>Telefon</th>
             <th>Adresse</th>
+            <th>Fachgebiet</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {TeilnehmerArray.filter((item) => {
+          {DozentArray.filter((item) => {
             return search.toLowerCase() === ""
               ? item
-              : item.teilnehmer_nachname.toLowerCase().includes(search);
-          }).map((teilnehmer) => (
-            <tr key={teilnehmer.teilnehmer_id} id={teilnehmer.teilnehmer_id}>
-              <td>{teilnehmer.teilnehmer_id}</td>
-              <td>{teilnehmer.teilnehmer_vorname}</td>
-              <td>{teilnehmer.teilnehmer_nachname}</td>
-              <td>{teilnehmer.kd_email}</td>
-              <td>{teilnehmer.kd_phone_nr}</td>
+              : item.dozent_nachname.toLowerCase().includes(search);
+          }).map((dozent) => (
+            <tr key={dozent.dozent_id} id={dozent.dozent_id}>
+              <td>{dozent.dozent_id}</td>
+              <td>{dozent.dozent_vorname}</td>
+              <td>{dozent.dozent_nachname}</td>
+              <td>{dozent.kd_email}</td>
+              <td>{dozent.kd_phone_nr}</td>
               <td>
-                {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
-                {teilnehmer.kd_haus_nr}
+                {dozent.kd_ort} {dozent.kd_plz} {dozent.kd_straße}{" "}
+                {dozent.kd_haus_nr}
               </td>
+              <td>{dozent.dozent_fachgebiet}</td>
 
               <td>
                 <Link
-                  to={`/add-teilnehmer/${teilnehmer.teilnehmer_id}`}
+                  to={`/add-dozent/${dozent.dozent_id}`}
                   className="btn btn-info action"
                 >
                   <EditIcon />
                 </Link>
                 <Link
                   onClick={(e) => {
-                    console.log(e, teilnehmer.teilnehmer_id);
-                    deleteTeilnehmer(e, teilnehmer.teilnehmer_id);
+                    deleteDozent(e, dozent.dozent_id);
                   }}
                   className="btn btn-danger"
+                  href=""
                 >
                   <DeleteIcon />
                 </Link>
@@ -101,15 +103,11 @@ const ListTeilnehmerComponent = () => {
         </tbody>
       </table>
 
-      <Link
-        to={"/add-teilnehmer"}
-        className="btn btn-primary mb-2 mt-3"
-        href=""
-      >
-        Add Teilnehmer
+      <Link to={"/add-dozent"} className="btn btn-primary mb-2 mt-3" href="">
+        Add Dozent
       </Link>
     </div>
   );
 };
 
-export default ListTeilnehmerComponent;
+export default ListDozentComponent;

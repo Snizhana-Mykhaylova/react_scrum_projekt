@@ -45,7 +45,7 @@ const AddKursComponent = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   // senden data zu api und navigate wenn alles gut
   function speicherKurs(e) {
@@ -54,17 +54,19 @@ const AddKursComponent = () => {
     if (
       kursData.name !== "" &&
       kursData.beschreibung !== "" &&
-      kursData.startDatum != ""
+      kursData.startDatum !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
         KursService.updateKurs(id, kursData)
           .then(navigate("/kurs"))
           .catch((e) => console.log(e));
+        window.location.reload();
       } else {
         KursService.speicherKurs(kursData)
           .then(navigate("/kurs"))
           .catch((e) => console.log(e));
+        window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");

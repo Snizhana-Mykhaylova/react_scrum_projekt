@@ -1,77 +1,83 @@
 import React, { useState, useEffect } from "react";
-import TeilnehmerService from "../services/TeilnehmerService";
+import DozentService from "../services/DozentService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const AddTeilnehmerComponent = () => {
+const AddDozentComponent = () => {
   const [vorname, setVorname] = useState("");
   const [nachname, setNachname] = useState("");
+  const [fachgebiet, setFachgebiet] = useState("");
   const [phone, setTelefon] = useState("");
   const [plz, setPlz] = useState("");
   const [ort, setOrt] = useState("");
-  const [straße, setStrasse] = useState("");
+  const [strasse, setStrasse] = useState("");
   const [hause_nr, setHausNummer] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const teilnehmerData = {
+  const dozentData = {
     vorname,
     nachname,
-    ort,
-    straße,
-    hause_nr,
-    plz,
-    email,
+    fachgebiet,
     phone,
+    plz,
+    ort,
+    strasse,
+    email,
+    hause_nr,
   };
 
   useEffect(() => {
     if (id) {
-      TeilnehmerService.getTeilnehmerById(id)
+      DozentService.getDozentById(id)
         .then((res) => {
-          const { teilnehmer_vorname, teilnehmer_nachname } =
-            res.data.teilnehmer[0];
           const {
-            kd_ort,
-            kd_straße,
-            kd_haus_nr,
-            kd_plz,
+            dozent_vorname,
+            dozent_nachname,
+            dozent_fachgebiet,
+          } = res.data.dozent[0];
+          const {
             kd_email,
+            kd_haus_nr,
+            kd_ort,
+            kd_plz,
+            kd_straße,
             kd_phone_nr,
           } = res.data.kontaktDaten[0];
-          setVorname(teilnehmer_vorname);
-          setNachname(teilnehmer_nachname);
+          setVorname(dozent_vorname);
+          setNachname(dozent_nachname);
+          setFachgebiet(dozent_fachgebiet);
+          setTelefon(kd_phone_nr);
+          setPlz(kd_plz);
           setOrt(kd_ort);
           setStrasse(kd_straße);
           setHausNummer(kd_haus_nr);
-          setPlz(kd_plz);
           setEmail(kd_email);
-          setTelefon(kd_phone_nr);
         })
         .catch((e) => console.log(e));
     }
   }, [id]);
 
   // senden data zu api und navigate wenn alles gut
-  function speicherTeilnehmer(e) {
+  function speicherDozent(e) {
     e.preventDefault();
 
     if (
-      teilnehmerData.vorname !== "" &&
-      teilnehmerData.nachname !== "" &&
-      teilnehmerData.email !== ""
+      dozentData.vorname !== "" &&
+      dozentData.nachname !== "" &&
+      dozentData.email !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
-        TeilnehmerService.updateTeilnehmer(id, teilnehmerData)
-          .then(navigate("/teilnehmer"))
+        DozentService.updateDozent(id, dozentData)
+          .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-        window.location.reload();
+          window.location.reload();
       } else {
-        TeilnehmerService.speicherTeilnehmer(teilnehmerData)
-          .then(navigate("/teilnehmer"))
+        DozentService.speicherDozent(dozentData)
+          .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-        window.location.reload();
+          window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");
@@ -82,9 +88,9 @@ const AddTeilnehmerComponent = () => {
 
   function title() {
     if (id) {
-      return "Teilnehmer bearbeiten";
+      return "Dozent bearbeiten";
     } else {
-      return "Teilnehmer hinzufügen";
+      return "Dozent hinzufügen";
     }
   }
 
@@ -112,6 +118,15 @@ const AddTeilnehmerComponent = () => {
                     onChange={(e) => setNachname(e.target.value)}
                     type="text"
                     placeholder="Nachname"
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <input
+                    className="form-control"
+                    value={fachgebiet}
+                    onChange={(e) => setFachgebiet(e.target.value)}
+                    type="text"
+                    placeholder="Fachgebiet"
                   />
                 </div>
                 <div className="form-group mb-2">
@@ -153,7 +168,7 @@ const AddTeilnehmerComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={straße}
+                    value={strasse}
                     onChange={(e) => setStrasse(e.target.value)}
                     type="text"
                     placeholder="Strasse"
@@ -169,12 +184,12 @@ const AddTeilnehmerComponent = () => {
                   />
                 </div>
                 <button
-                  onClick={(e) => speicherTeilnehmer(e)}
+                  onClick={(e) => speicherDozent(e)}
                   className="btn btn-success"
                 >
                   Speichern
                 </button>{" "}
-                <Link to={"/teilnehmer"} className="btn btn-danger" href="">
+                <Link to={"/dozenten"} className="btn btn-danger" href="">
                   Stornieren
                 </Link>
               </form>
@@ -186,4 +201,4 @@ const AddTeilnehmerComponent = () => {
   );
 };
 
-export default AddTeilnehmerComponent;
+export default AddDozentComponent;

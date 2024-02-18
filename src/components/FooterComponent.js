@@ -8,7 +8,7 @@ const FooterComponent = () => {
           <div className="container p-4">
             <section className="mb-4">
               <p>
-                Talentschmiede CBM Unser Ziel – Ihre persönliche
+                Talentschmiede CBM Unser Ziel - Ihre persönliche
                 Weiterentwicklung und berufliche Selbstverwirklichung!
               </p>
             </section>

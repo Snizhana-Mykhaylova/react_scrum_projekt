@@ -13,12 +13,12 @@ class TeilnehmerService {
 
   getTeilnehmerById(id) {
     console.log(id);
-    return axios.get(`${link}/get_teilnehmer_info/${id}`);
+    return axios.get(`${link}/teilnehemr_einzel/${id}`);
   }
 
   speicherTeilnehmer(teilnehmerData) {
     console.log(teilnehmerData);
-    return axios.post(link + "/insert_teilnehmer", teilnehmerData);
+    return axios.post(`${link}/insert_teilnehmer`, teilnehmerData);
   }
 
   updateTeilnehmer(id, teilnehmerData) {
@@ -26,9 +26,11 @@ class TeilnehmerService {
   }
 
   deleteTeilnehmer(id) {
-    console.log("service delete" + id)
+    console.log("service delete " + id)
     return axios.delete(`${link}/delete_tn/${id}`);
   }
 }
 
-export default new TeilnehmerService();
+var teilnehmerService = new TeilnehmerService();
+
+export default teilnehmerService;
