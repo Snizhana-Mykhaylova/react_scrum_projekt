@@ -31,11 +31,8 @@ const AddDozentComponent = () => {
     if (id) {
       DozentService.getDozentById(id)
         .then((res) => {
-          const {
-            dozent_vorname,
-            dozent_nachname,
-            dozent_fachgebiet,
-          } = res.data.dozent[0];
+          const { dozent_vorname, dozent_nachname, dozent_fachgebiet } =
+            res.data.dozent[0];
           const {
             kd_email,
             kd_haus_nr,
@@ -72,12 +69,12 @@ const AddDozentComponent = () => {
         DozentService.updateDozent(id, dozentData)
           .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-          window.location.reload();
+        window.location.reload();
       } else {
         DozentService.speicherDozent(dozentData)
           .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-          window.location.reload();
+        window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");

@@ -19,13 +19,12 @@ function App() {
         <HeaderComponent />
         <div className="container">
           <Routes>
-            <Route path='/login'element={<LoginComponent />}></Route>
             <Route path="/" element={<MainComponent />} />
+            <Route path="/login" element={<LoginComponent />}></Route>
             <Route path="/mitarbeiter" element={<ListMitarbeiterComponent />} />
             <Route path="/teilnehmer" element={<ListTeilnehmerComponent />} />
             <Route path="/kurse" element={<ListKursComponent />} />
             <Route path="/dozenten" element={<ListDozentComponent />} />
-
             <Route
               path="/add-mitarbeiter"
               element={<AddMitarbeiterComponent />}
