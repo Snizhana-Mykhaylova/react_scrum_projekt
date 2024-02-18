@@ -9,27 +9,28 @@ const HeaderComponent = () => {
     <div className="headerbackground">
       <div className="container">
         <div class="header">
-
-            <div>
-              <Link to={"/"}><img className="logo" src={logo}></img></Link>
-            </div>
-            <ul className="navlist">
-              <Link to={"/mitarbeiter"} className="nav-link" href="#">
-                    Mitarbeiter
-                  </Link>
-                   <Link to={"/teilnehmer"} className="nav-link" href="#">
-                    Teilnehmer
-                  </Link>
-<Link to={"/dozenten"} className="nav-link" href="#">
-                    Dozenten
-                  </Link>
-<Link to={"/kurse"} className="nav-link" href="#">
-                   Kurse
-                  </Link>
-
+          <div>
+            <Link to={"/"}>
+              <img className="logo" src={logo} alt=""></img>
+            </Link>
+          </div>
+          <ul className="navlist">
+            <Link to={"/mitarbeiter"} className="nav-link" href="#">
+              Mitarbeiter
+            </Link>
+            <Link to={"/teilnehmer"} className="nav-link" href="#">
+              Teilnehmer
+            </Link>
+            <Link to={"/dozenten"} className="nav-link" href="#">
+              Dozenten
+            </Link>
+            <Link to={"/kurse"} className="nav-link" href="#">
+              Kurse
+            </Link>
+          </ul>
           <div class="header-right">
             <Link to={"/login"}>
-              <img className="profileLogo" src={profilelogo}></img>
+              <img className="profileLogo" src={profilelogo} alt=""></img>
               <span className="logintext">Login</span>
             </Link>
           </div>
