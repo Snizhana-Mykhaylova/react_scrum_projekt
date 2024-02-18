@@ -5,11 +5,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 const AddTeilnehmerComponent = () => {
   const [vorname, setVorname] = useState("");
   const [nachname, setNachname] = useState("");
-  const [position, setPosition] = useState("");
   const [phone, setTelefon] = useState("");
   const [plz, setPlz] = useState("");
   const [ort, setOrt] = useState("");
-  const [strasse, setStrasse] = useState("");
+  const [straße, setStrasse] = useState("");
   const [hause_nr, setHausNummer] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
@@ -18,45 +17,40 @@ const AddTeilnehmerComponent = () => {
   const teilnehmerData = {
     vorname,
     nachname,
-    position,
-    phone,
-    plz,
     ort,
-    strasse,
-    email,
+    straße,
     hause_nr,
+    plz,
+    email,
+    phone,
   };
 
   useEffect(() => {
     if (id) {
       TeilnehmerService.getTeilnehmerById(id)
         .then((res) => {
+          const { teilnehmer_vorname, teilnehmer_nachname } =
+            res.data.teilnehmer[0];
           const {
-            teilnehmer_vorname,
-            teilnehmer_nachname,
-            teilnehmer_position,
-          } = res.data.teilnehmer[0];
-          const {
-            kd_email,
-            kd_haus_nr,
             kd_ort,
-            kd_plz,
             kd_straße,
+            kd_haus_nr,
+            kd_plz,
+            kd_email,
             kd_phone_nr,
           } = res.data.kontaktDaten[0];
           setVorname(teilnehmer_vorname);
           setNachname(teilnehmer_nachname);
-          setPosition(teilnehmer_position);
-          setTelefon(kd_phone_nr);
-          setPlz(kd_plz);
           setOrt(kd_ort);
           setStrasse(kd_straße);
           setHausNummer(kd_haus_nr);
+          setPlz(kd_plz);
           setEmail(kd_email);
+          setTelefon(kd_phone_nr);
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   // senden data zu api und navigate wenn alles gut
   function speicherTeilnehmer(e) {
@@ -65,17 +59,19 @@ const AddTeilnehmerComponent = () => {
     if (
       teilnehmerData.vorname !== "" &&
       teilnehmerData.nachname !== "" &&
-      teilnehmerData.email != ""
+      teilnehmerData.email !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
         TeilnehmerService.updateTeilnehmer(id, teilnehmerData)
           .then(navigate("/teilnehmer"))
           .catch((e) => console.log(e));
+        window.location.reload();
       } else {
         TeilnehmerService.speicherTeilnehmer(teilnehmerData)
           .then(navigate("/teilnehmer"))
           .catch((e) => console.log(e));
+        window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");
@@ -121,15 +117,6 @@ const AddTeilnehmerComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}
-                    type="text"
-                    placeholder="Position"
-                  />
-                </div>
-                <div className="form-group mb-2">
-                  <input
-                    className="form-control"
                     value={phone}
                     onChange={(e) => setTelefon(e.target.value)}
                     type="text"
@@ -166,7 +153,7 @@ const AddTeilnehmerComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={strasse}
+                    value={straße}
                     onChange={(e) => setStrasse(e.target.value)}
                     type="text"
                     placeholder="Strasse"

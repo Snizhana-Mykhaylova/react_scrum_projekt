@@ -28,4 +28,6 @@ class MitarbeiterService {
   }
 }
 
-export default new MitarbeiterService();
+var mitarbeiterService = new MitarbeiterService();
+
+export default mitarbeiterService;

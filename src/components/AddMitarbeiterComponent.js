@@ -56,7 +56,7 @@ const AddMitarbeiterComponent = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   // senden data zu api und navigate wenn alles gut
   function speicherMitarbeiter(e) {
@@ -65,17 +65,19 @@ const AddMitarbeiterComponent = () => {
     if (
       mitarbeiterData.vorname !== "" &&
       mitarbeiterData.nachname !== "" &&
-      mitarbeiterData.email != ""
+      mitarbeiterData.email !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
         MitarbeiterService.updateMitarbeiter(id, mitarbeiterData)
           .then(navigate("/mitarbeiter"))
           .catch((e) => console.log(e));
+        window.location.reload();
       } else {
         MitarbeiterService.speicherMitarbeiter(mitarbeiterData)
           .then(navigate("/mitarbeiter"))
           .catch((e) => console.log(e));
+        window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");

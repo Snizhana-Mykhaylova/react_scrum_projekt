@@ -13,21 +13,24 @@ class TeilnehmerService {
 
   getTeilnehmerById(id) {
     console.log(id);
-    return axios.get(`${link}/get_teilnehmer_info/${id}`);
+    return axios.get(`${link}/teilnehemr_einzel/${id}`);
   }
 
   speicherTeilnehmer(teilnehmerData) {
     console.log(teilnehmerData);
-    return axios.post(link + "/insert_teilnehmer", teilnehmerData);
+    return axios.post(`${link}/insert_teilnehmer`, teilnehmerData);
   }
 
   updateTeilnehmer(id, teilnehmerData) {
-    return axios.put(`${link}/update_teilnehmer/${id}`, teilnehmerData);
+    return axios.put(`${link}/update_TN/${id}`, teilnehmerData);
   }
 
   deleteTeilnehmer(id) {
-    return axios.delete(`${link}/delete_teilnehmer/${id}`);
+    console.log("service delete " + id)
+    return axios.delete(`${link}/delete_tn/${id}`);
   }
 }
 
-export default new TeilnehmerService();
+var teilnehmerService = new TeilnehmerService();
+
+export default teilnehmerService;

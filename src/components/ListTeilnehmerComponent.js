@@ -59,7 +59,6 @@ const ListTeilnehmerComponent = () => {
             <th>Email</th>
             <th>Telefon</th>
             <th>Adresse</th>
-            <th>Position</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -79,7 +78,6 @@ const ListTeilnehmerComponent = () => {
                 {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
                 {teilnehmer.kd_haus_nr}
               </td>
-              <td>{teilnehmer.teilnehmer_position}</td>
 
               <td>
                 <Link
@@ -88,15 +86,15 @@ const ListTeilnehmerComponent = () => {
                 >
                   <EditIcon />
                 </Link>
-                <a
+                <Link
                   onClick={(e) => {
+                    console.log(e, teilnehmer.teilnehmer_id);
                     deleteTeilnehmer(e, teilnehmer.teilnehmer_id);
                   }}
                   className="btn btn-danger"
-                  href=""
                 >
                   <DeleteIcon />
-                </a>
+                </Link>
               </td>
             </tr>
           ))}

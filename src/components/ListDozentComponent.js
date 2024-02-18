@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DozentenService from "../services/DozentenService";
+import DozentService from "../services/DozentService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
-const ListDozentenComponent = () => {
-  const [dozentenArray, setdozentenArray] = useState([]);
+const ListDozentComponent = () => {
+  const [DozentArray, setDozentArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getdozenten();
+    getDozent();
   }, []);
 
-  function getdozenten() {
-     DozentenService.getdozenten()
+  function getDozent() {
+    DozentService.getDozent()
       .then((res) => {
-        setdozentenArray(res.data);
-        console.log(res)
+        setDozentArray(res.data);
       })
       .catch((e) => console.log(e));
   }
 
-  function deletedozenten(e, id) {
+  function deleteDozent(e, id) {
     e.preventDefault();
     console.log(id);
-     DozentenService.deletedozenten(id)
+    DozentService.deleteDozent(id)
       .then(window.location.reload(true))
       .catch((e) => console.log(e));
   }
@@ -50,7 +49,7 @@ const ListDozentenComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">Dozenten</h2>
+      <h2 className="text-center mb-4">List Dozent</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
@@ -65,57 +64,50 @@ const ListDozentenComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {dozentenArray.filter((item) => {
+          {DozentArray.filter((item) => {
             return search.toLowerCase() === ""
               ? item
               : item.dozent_nachname.toLowerCase().includes(search);
-          }).map((dozenten) => (
-            <tr
-              key={dozenten.dozent_id}
-              id={dozenten.dozent_id}
-            >
-              <td>{dozenten.dozent_id}</td>
-              <td>{dozenten.dozent_vorname}</td>
-              <td>{dozenten.dozent_nachname}</td>
-              <td>{dozenten.kd_email}</td>
-              <td>{dozenten.kd_phone_nr}</td>
+          }).map((dozent) => (
+            <tr key={dozent.dozent_id} id={dozent.dozent_id}>
+              <td>{dozent.dozent_id}</td>
+              <td>{dozent.dozent_vorname}</td>
+              <td>{dozent.dozent_nachname}</td>
+              <td>{dozent.kd_email}</td>
+              <td>{dozent.kd_phone_nr}</td>
               <td>
-                {dozenten.kd_ort} {dozenten.kd_plz}{" "}
-                {dozenten.kd_straße} {dozenten.kd_haus_nr}
+                {dozent.kd_ort} {dozent.kd_plz} {dozent.kd_straße}{" "}
+                {dozent.kd_haus_nr}
               </td>
-              <td>{dozenten.dozent_fachgebiet}</td>
+              <td>{dozent.dozent_fachgebiet}</td>
 
               <td>
                 <Link
-                  to={`/add-dozenten/${dozenten.dozent_id}`}
+                  to={`/add-dozent/${dozent.dozent_id}`}
                   className="btn btn-info action"
                 >
                   <EditIcon />
                 </Link>
-                <a
+                <Link
                   onClick={(e) => {
-                    deletedozenten(e, dozenten.dozent_id);
+                    deleteDozent(e, dozent.dozent_id);
                   }}
                   className="btn btn-danger"
                   href=""
                 >
                   <DeleteIcon />
-                </a>
+                </Link>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <Link
-        to={"/add-dozenten"}
-        className="btn btn-primary mb-2 mt-3"
-        href=""
-      >
-        Add dozenten
+      <Link to={"/add-dozent"} className="btn btn-primary mb-2 mt-3" href="">
+        Add Dozent
       </Link>
     </div>
   );
 };
 
-export default ListDozentenComponent;
+export default ListDozentComponent;

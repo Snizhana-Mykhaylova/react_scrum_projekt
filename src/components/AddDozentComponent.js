@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import DozentenService from "../services/DozentenService";
+import DozentService from "../services/DozentService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const AddDozentenComponent = () => {
+const AddDozentComponent = () => {
   const [vorname, setVorname] = useState("");
   const [nachname, setNachname] = useState("");
-  const [fachgebiet, setfachgebiet] = useState("");
+  const [fachgebiet, setFachgebiet] = useState("");
   const [phone, setTelefon] = useState("");
   const [plz, setPlz] = useState("");
   const [ort, setOrt] = useState("");
@@ -15,7 +15,7 @@ const AddDozentenComponent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const dozentenData = {
+  const dozentData = {
     vorname,
     nachname,
     fachgebiet,
@@ -29,10 +29,13 @@ const AddDozentenComponent = () => {
 
   useEffect(() => {
     if (id) {
-      DozentenService.getDozentenById(id)
+      DozentService.getDozentById(id)
         .then((res) => {
-          const { dozent_vorname, dozent_nachname, dozent_fachgebiet } =
-            res.data.dozenten[0];
+          const {
+            dozent_vorname,
+            dozent_nachname,
+            dozent_fachgebiet,
+          } = res.data.dozent[0];
           const {
             kd_email,
             kd_haus_nr,
@@ -43,7 +46,7 @@ const AddDozentenComponent = () => {
           } = res.data.kontaktDaten[0];
           setVorname(dozent_vorname);
           setNachname(dozent_nachname);
-          setfachgebiet(dozent_fachgebiet);
+          setFachgebiet(dozent_fachgebiet);
           setTelefon(kd_phone_nr);
           setPlz(kd_plz);
           setOrt(kd_ort);
@@ -56,23 +59,25 @@ const AddDozentenComponent = () => {
   }, [id]);
 
   // senden data zu api und navigate wenn alles gut
-  function speicherDozenten(e) {
+  function speicherDozent(e) {
     e.preventDefault();
 
     if (
-      dozentenData.vorname !== "" &&
-      dozentenData.nachname !== "" &&
-      dozentenData.email != ""
+      dozentData.vorname !== "" &&
+      dozentData.nachname !== "" &&
+      dozentData.email !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
-        DozentenService.updatedozenten(id, dozentenData)
+        DozentService.updateDozent(id, dozentData)
           .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
+          window.location.reload();
       } else {
-        DozentenService.speicherdozenten(dozentenData)
+        DozentService.speicherDozent(dozentData)
           .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
+          window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");
@@ -83,9 +88,9 @@ const AddDozentenComponent = () => {
 
   function title() {
     if (id) {
-      return "Dozenten bearbeiten";
+      return "Dozent bearbeiten";
     } else {
-      return "Dozenten hinzufügen";
+      return "Dozent hinzufügen";
     }
   }
 
@@ -119,9 +124,9 @@ const AddDozentenComponent = () => {
                   <input
                     className="form-control"
                     value={fachgebiet}
-                    onChange={(e) => setfachgebiet(e.target.value)}
+                    onChange={(e) => setFachgebiet(e.target.value)}
                     type="text"
-                    placeholder="fachgebiet"
+                    placeholder="Fachgebiet"
                   />
                 </div>
                 <div className="form-group mb-2">
@@ -179,7 +184,7 @@ const AddDozentenComponent = () => {
                   />
                 </div>
                 <button
-                  onClick={(e) => speicherDozenten(e)}
+                  onClick={(e) => speicherDozent(e)}
                   className="btn btn-success"
                 >
                   Speichern
@@ -196,4 +201,4 @@ const AddDozentenComponent = () => {
   );
 };
 
-export default AddDozentenComponent;
+export default AddDozentComponent;

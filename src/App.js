@@ -4,9 +4,11 @@ import MainComponent from "./components/MainComponent";
 import ListMitarbeiterComponent from "./components/ListMitarbeiterComponent";
 import AddMitarbeiterComponent from "./components/AddMitarbeiterComponent";
 import ListTeilnehmerComponent from "./components/ListTeilnehmerComponent";
-import ListDozentenComponent from "./components/ListDozentenComponent";
 import AddTeilnehmerComponent from "./components/AddTeilnehmerComponent";
-import AddDozentenComponent from "./components/AddDozentComponent";
+import ListDozentComponent from "./components/ListDozentComponent";
+import AddDozentComponent from "./components/AddDozentComponent";
+import ListKursComponent from "./components/ListKursComponents";
+import AddKursComponent from "./components/AddKursComponents";
 import LoginComponent from "./components/LoginComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -21,7 +23,9 @@ function App() {
             <Route path="/" element={<MainComponent />} />
             <Route path="/mitarbeiter" element={<ListMitarbeiterComponent />} />
             <Route path="/teilnehmer" element={<ListTeilnehmerComponent />} />
-            <Route path="/dozenten" element={<ListDozentenComponent />} />
+            <Route path="/kurse" element={<ListKursComponent />} />
+            <Route path="/dozenten" element={<ListDozentComponent />} />
+
             <Route
               path="/add-mitarbeiter"
               element={<AddMitarbeiterComponent />}
@@ -31,15 +35,18 @@ function App() {
               element={<AddMitarbeiterComponent />}
             />
             <Route
-              path="/add-dozenten"
-              element={<AddDozentenComponent/>}
+              path="/add-teilnehmer"
+              element={<AddTeilnehmerComponent />}
             />
             <Route
-              path="/add-dozenten/:id"
-              element={<AddDozentenComponent />}
+              path="/add-teilnehmer/:id"
+              element={<AddTeilnehmerComponent />}
             />
+            <Route path="/add-dozent" element={<AddDozentComponent />} />
+            <Route path="/add-dozent/:id" element={<AddDozentComponent />} />
+            <Route path="/add-kurs" element={<AddKursComponent />} />
+            <Route path="/add-kurs/:id" element={<AddKursComponent />} />
           </Routes>
-         
         </div>
         <FooterComponent />
       </BrowserRouter>
