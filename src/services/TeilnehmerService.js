@@ -13,7 +13,7 @@ class TeilnehmerService {
 
   getTeilnehmerById(id) {
     console.log(id);
-    return axios.get(`${link}/teilnehemr_einzel/${id}`);
+    return axios.get(`${link}/teilnehemr_einzel/info/${id}`);
   }
 
   speicherTeilnehmer(teilnehmerData) {
