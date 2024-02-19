@@ -142,3 +142,9 @@ justify-content: center;
     margin-left: 200px;
 }
 
+.error-message {
+    color: red;
+}
+.invisible {
+    display: none;
+}

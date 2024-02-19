@@ -29,7 +29,7 @@ const AddDozentenComponent = () => {
 
   useEffect(() => {
     if (id) {
-       DozentenService.getDozentenById(id)
+       DozentenService.getdozentenById(id)
         .then((res) => {
           const {
             dozent_vorname,

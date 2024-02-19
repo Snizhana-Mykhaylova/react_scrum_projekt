@@ -50,7 +50,7 @@ const ListDozentenComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">Dozenten</h2>
+      <h2 className="text-center mb-4">List Dozenten</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
