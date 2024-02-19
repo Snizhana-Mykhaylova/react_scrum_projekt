@@ -8,21 +8,21 @@ const link = "http://localhost:5500";
 
 class DozentService {
   getDozent() {
-    return axios.get(link + "/get_dozent");
+    return axios.get(link + "/getAll_dozent_info");
   }
 
   getDozentById(id) {
     console.log(id);
-    return axios.get(`${link}/get_dozent/${id}`);
+    return axios.get(`${link}/get_one_dozent/${id}`);
   }
 
   speicherDozent(dozentData) {
     console.log(dozentData);
-    return axios.post(link + "/insert_dozent", dozentData);
+    return axios.post(link + "/insert_dozent_into", dozentData);
   }
 
   updateDozent(id, dozentData) {
-    return axios.put(`${link}/dozent_update/${id}`, dozentData);
+    return axios.put(`${link}/update_dozent/${id}`, dozentData);
   }
 
   deleteDozent(id) {
