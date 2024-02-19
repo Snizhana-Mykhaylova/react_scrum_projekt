@@ -8,7 +8,7 @@ const link = "http://localhost:5500";
 
 class KursService {
   getKurs() {
-    return axios.get(link + "/getAll_kurs");
+    return axios.get(link + "/getAll_kurs_info");
   }
 
   getKursById(id) {
