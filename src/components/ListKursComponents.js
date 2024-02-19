@@ -5,6 +5,8 @@ import DozentService from "../services/DozentService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
+import { CleaningServices } from "@mui/icons-material";
+import dozentService from "../services/DozentService";
 
 const ListKursComponent = () => {
   const [kursArray, setKursArray] = useState([]);
@@ -12,15 +14,18 @@ const ListKursComponent = () => {
 
   useEffect(() => {
     getKurs();
+
   }, []);
 
   function getKurs() {
     KursService.getKurs()
       .then((res) => {
-        setKursArray(res.data);
+        setKursArray(res.data.kurse);
       })
       .catch((e) => console.log(e));
   }
+
+
 
   function deleteKurs(e, id) {
     e.preventDefault();
@@ -66,11 +71,10 @@ const ListKursComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {kursArray
-            .filter((item) => {
+          {kursArray.filter((kurs) => {
               return search.toLowerCase() === ""
-                ? item
-                : item.kurs_nachname.toLowerCase().includes(search);
+                ? kurs
+                : kurs.kurs_name.toLowerCase().includes(search);
             })
             .map((kurs) => (
               <tr key={kurs.kurs_id} id={kurs.kurs_id}>
@@ -80,8 +84,8 @@ const ListKursComponent = () => {
                 <td>{kurs.kurs_start_datum}</td>
                 <td>{kurs.kurs_end_datum}</td>
                 <td>{kurs.fk_dozent_id}</td>
-                <td>{}</td>
-                <td>{}</td>
+                <td>{kurs.dozent_vorname}</td>
+                <td>{kurs.dozent_nachname}</td>
 
                 <td>
                   <Link
