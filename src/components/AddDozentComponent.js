@@ -1,72 +1,81 @@
 import React, { useState, useEffect } from "react";
-import KursService from "../services/KursService";
+import DozentenService from "../services/DozentService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-const AddKursComponent = () => {
-  const [name, setKursName] = useState("");
-  const [beschreibung, setBeschreibung] = useState("");
-  const [startDatum, setStartDatum] = useState("");
-  const [endDatum, setEndDatum] = useState("");
-  const [dozentId, setDozentId] = useState("");
-  const [dozentVorname, setDozentVorname] = useState("");
-  const [dozentNachname, setDozentNachname] = useState("");
+const AddDozentenComponent = () => {
+  const [vorname, setVorname] = useState("");
+  const [nachname, setNachname] = useState("");
+  const [fachgebiet, setfachgebiet] = useState("");
+  const [phone, setTelefon] = useState("");
+  const [plz, setPlz] = useState("");
+  const [ort, setOrt] = useState("");
+  const [strasse, setStrasse] = useState("");
+  const [hause_nr, setHausNummer] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const kursData = {
-    name,
-    beschreibung,
-    startDatum,
-    endDatum,
-    dozentId,
-    dozentVorname,
-    dozentNachname,
+  const dozentenData = {
+    vorname,
+    nachname,
+    fachgebiet,
+    phone,
+    plz,
+    ort,
+    strasse,
+    email,
+    hause_nr,
   };
 
   useEffect(() => {
     if (id) {
-      KursService.getKursById(id)
+       DozentenService.getDozentById(id)
         .then((res) => {
           const {
-            kurs_name,
-            kurs_beschreibung,
-            kurs_start_datum,
-            kurs_end_datum,
-            fk_dozent_id,
-          } = res.data.kurs[0];
-          const { dozent_vorname, dozent_nachname } = res.data.dozentenDaten[0];
-          setKursName(kurs_name);
-          setBeschreibung(kurs_beschreibung);
-          setStartDatum(kurs_start_datum);
-          setEndDatum(kurs_end_datum);
-          setDozentId(fk_dozent_id);
-          setDozentVorname(dozent_vorname);
-          setDozentNachname(dozent_nachname);
+            dozent_vorname,
+            dozent_nachname,
+            dozent_fachgebiet,
+          } = res.data.dozenten[0];
+          const {
+            kd_email,
+            kd_haus_nr,
+            kd_ort,
+            kd_plz,
+            kd_straße,
+            kd_phone_nr,
+          } = res.data.kontaktDaten[0];
+          setVorname(dozent_vorname);
+          setNachname(dozent_nachname);
+          setfachgebiet(dozent_fachgebiet);
+          setTelefon(kd_phone_nr);
+          setPlz(kd_plz);
+          setOrt(kd_ort);
+          setStrasse(kd_straße);
+          setHausNummer(kd_haus_nr);
+          setEmail(kd_email);
         })
         .catch((e) => console.log(e));
     }
-  }, [id]);
+  }, []);
 
   // senden data zu api und navigate wenn alles gut
-  function speicherKurs(e) {
+  function speicherDozenten(e) {
     e.preventDefault();
 
     if (
-      kursData.name !== "" &&
-      kursData.beschreibung !== "" &&
-      kursData.startDatum !== ""
+      dozentenData.vorname !== "" &&
+      dozentenData.nachname !== "" &&
+      dozentenData.email != ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
-        KursService.updateKurs(id, kursData)
-          .then(navigate("/kurs"))
+        DozentenService.updateDozent(id, dozentenData)
+          .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-        window.location.reload();
       } else {
-        KursService.speicherKurs(kursData)
-          .then(navigate("/kurs"))
+        DozentenService.speicherDozent(dozentenData)
+          .then(navigate("/dozenten"))
           .catch((e) => console.log(e));
-        window.location.reload();
       }
     } else {
       alert("Please, fill in all inputes");
@@ -77,9 +86,9 @@ const AddKursComponent = () => {
 
   function title() {
     if (id) {
-      return "Kurs bearbeiten";
+      return "Dozenten bearbeiten";
     } else {
-      return "Kurs hinzufügen";
+      return "Dozenten hinzufügen";
     }
   }
 
@@ -94,73 +103,91 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={name}
-                    onChange={(e) => setKursName(e.target.value)}
+                    value={vorname}
+                    onChange={(e) => setVorname(e.target.value)}
                     type="text"
-                    placeholder="Name"
+                    placeholder="Vorname"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={beschreibung}
-                    onChange={(e) => setBeschreibung(e.target.value)}
+                    value={nachname}
+                    onChange={(e) => setNachname(e.target.value)}
                     type="text"
-                    placeholder="Beschreibung"
+                    placeholder="Nachname"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={startDatum}
-                    onChange={(e) => setStartDatum(e.target.value)}
+                    value={fachgebiet}
+                    onChange={(e) => setfachgebiet(e.target.value)}
                     type="text"
-                    placeholder="Start"
+                    placeholder="Fachgebiet"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={endDatum}
-                    onChange={(e) => setEndDatum(e.target.value)}
+                    value={phone}
+                    onChange={(e) => setTelefon(e.target.value)}
                     type="text"
-                    placeholder="Ende"
+                    placeholder="Telefon"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentId}
-                    onChange={(e) => setDozentId(e.target.value)}
-                    type="text"
-                    placeholder="DozentenId"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="Email"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentVorname}
-                    onChange={(e) => setDozentVorname(e.target.value)}
+                    value={plz}
+                    onChange={(e) => setPlz(e.target.value)}
                     type="text"
-                    placeholder="DozentenVorname"
+                    placeholder="Plz"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentNachname}
-                    onChange={(e) => setDozentNachname(e.target.value)}
+                    value={ort}
+                    onChange={(e) => setOrt(e.target.value)}
                     type="text"
-                    placeholder="DozentenNachname"
+                    placeholder="Ort"
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <input
+                    className="form-control"
+                    value={strasse}
+                    onChange={(e) => setStrasse(e.target.value)}
+                    type="text"
+                    placeholder="Strasse"
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <input
+                    className="form-control"
+                    value={hause_nr}
+                    onChange={(e) => setHausNummer(e.target.value)}
+                    type="text"
+                    placeholder="Haus Nummer"
                   />
                 </div>
                 <button
-                  onClick={(e) => speicherKurs(e)}
+                  onClick={(e) => speicherDozenten(e)}
                   className="btn btn-success"
                 >
                   Speichern
                 </button>{" "}
-                <Link to={"/kurs"} className="btn btn-danger" href="">
+                <Link to={"/dozenten"} className="btn btn-danger" href="">
                   Stornieren
                 </Link>
               </form>
@@ -172,4 +199,4 @@ const AddKursComponent = () => {
   );
 };
 
-export default AddKursComponent;
+export default AddDozentenComponent;
