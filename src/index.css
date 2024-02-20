@@ -116,3 +116,36 @@ section {
     rgba(63, 154, 174, 1) 67%
   );
 }
+
+.workspacebackground {
+  display: block;
+  height: 600px;
+  width: 800px;
+}
+
+.workspace {
+  display: block;
+  height: 500px;
+  width: 900px;
+}
+.baner {
+  display: flex;
+}
+
+.beschreibung {
+  display: block;
+}
+
+.baner2 {
+  display: flex;
+}
+
+.card-img-top {
+  width: 100px;
+  height: 270px;
+}
+
+.footer_section {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
