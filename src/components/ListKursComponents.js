@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import KursService from "../services/KursService";
-import DozentService from "../services/DozentService";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
-import { CleaningServices } from "@mui/icons-material";
-import dozentService from "../services/DozentService";
+import InfoIcon from '@mui/icons-material/Info';
+
+
 
 const ListKursComponent = () => {
   const [kursArray, setKursArray] = useState([]);
@@ -94,6 +95,7 @@ const ListKursComponent = () => {
                   >
                     <EditIcon />
                   </Link>
+
                   <Link
                     onClick={(e) => {
                       deleteKurs(e, kurs.kurs_id);
@@ -102,6 +104,13 @@ const ListKursComponent = () => {
                     href=""
                   >
                     <DeleteIcon />
+                  </Link>
+
+                  <Link
+                    to={`/kurs_details/${kurs.kurs_id}`}
+                    className="btn btn-success"
+                  >
+                    <InfoIcon/>
                   </Link>
                 </td>
               </tr>
