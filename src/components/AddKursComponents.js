@@ -5,8 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 const AddKursComponent = () => {
   const [kurs_name, setKursName] = useState("");
   const [kurs_beschreibung, setBeschreibung] = useState("");
-  const [kurs_start_datum, setStartDatum] = useState("");
-  const [kurs_end_datum, setEndDatum] = useState("");
+  // const [kurs_start_datum, setStartDatum] = useState("");
+  // const [kurs_end_datum, setEndDatum] = useState("");
   const [fk_dozent_id, setDozentId] = useState("");
   const [dozent_vorname, setDozentVorname] = useState("");
   const [dozent_nachname, setDozentNachname] = useState("");
@@ -16,8 +16,8 @@ const AddKursComponent = () => {
   const kursData = {
     kurs_name,
     kurs_beschreibung,
-    kurs_start_datum,
-    kurs_end_datum,
+    // kurs_start_datum,
+    // kurs_end_datum,
     fk_dozent_id,
     dozent_vorname,
     dozent_nachname,
@@ -30,11 +30,11 @@ const AddKursComponent = () => {
           console.log(res);
           if (res.data.kurse || res.data.kurse.length > 0) {
             const {
-              
+
               kurs_name,
               kurs_beschreibung,
-              kurs_start_datum,
-              kurs_end_datum,
+              // kurs_start_datum,
+              // kurs_end_datum,
               fk_dozent_id,
               dozent_vorname,
               dozent_nachname,
@@ -42,8 +42,8 @@ const AddKursComponent = () => {
             } = res.data.kurse[0];
             setKursName(kurs_name);
             setBeschreibung(kurs_beschreibung);
-            setStartDatum(kurs_start_datum);
-            setEndDatum(kurs_end_datum);
+            // setStartDatum(kurs_start_datum);
+            // setEndDatum(kurs_end_datum);
             setDozentId(fk_dozent_id);
             setDozentVorname(dozent_vorname);
             setDozentNachname(dozent_nachname);
@@ -56,12 +56,53 @@ const AddKursComponent = () => {
     }
   }, [id]);
   
+  // fk_dozent_id(null);
+  // setDozentVorname("");
+  // setDozentNachname(null);
+  const kursDataDozentDelete = {
+    kurs_name,
+    kurs_beschreibung,
+    // kurs_start_datum,
+    // kurs_end_datum,
+    fk_dozent_id,
+    // dozent_vorname,
+    // dozent_nachname
+  };
 
-  // senden data zu api und navigate wenn alles gut
+  function zurucksetzen(e){
+    e.preventDefault();
+
+    if (kurs_name !== "" &&
+     kurs_beschreibung !== "" 
+  
+      ) {
+      if (id) {
+        KursService.deleteDozenten(id, kursDataDozentDelete
+          
+          )
+          .then(() => {
+            navigate("/kurse");
+          })
+          .catch((e) => console.log(e));
+      } else {
+        KursService.speicherKurs(kursData)
+          .then(() => {
+            navigate("/kurse");
+          })
+          .catch((e) => console.log(e));
+      }
+    } else {
+      alert("Bitte füllen Sie alle Felder aus");
+    }
+
+  }
   function speicherKurs(e) {
     e.preventDefault();
 
-    if (kurs_name !== "" && kurs_beschreibung !== "" && kurs_start_datum !== "") {
+    if (kurs_name !== "" &&
+     kurs_beschreibung !== "" 
+  
+      ) {
       if (id) {
         KursService.updateKurs(id, kursData)
           .then(() => {
@@ -116,7 +157,7 @@ const AddKursComponent = () => {
                     placeholder="Beschreibung"
                   />
                 </div>
-                <div className="form-group mb-2">
+                {/* <div className="form-group mb-2">
                   <input
                     className="form-control"
                     value={kurs_start_datum}
@@ -133,13 +174,14 @@ const AddKursComponent = () => {
                     type="date"
                     placeholder="Ende"
                   />
-                </div>
+                </div> */}
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
                     value={fk_dozent_id}
                     onChange={(e) => setDozentId(e.target.value)}
                     type="text"
+                    // disabled
                     placeholder="DozentenId"
                   />
                 </div>
@@ -149,6 +191,7 @@ const AddKursComponent = () => {
                     value={dozent_vorname}
                     onChange={(e) => setDozentVorname(e.target.value)}
                     type="text"
+                    disabled
                     placeholder="DozentenVorname"
                   />
                 </div>
@@ -157,6 +200,7 @@ const AddKursComponent = () => {
                     className="form-control"
                     value={dozent_nachname}
                     onChange={(e) => setDozentNachname(e.target.value)}
+                    disabled
                     type="text"
                     placeholder="DozentenNachname"
                   />
@@ -166,6 +210,12 @@ const AddKursComponent = () => {
                   className="btn btn-success"
                 >
                   Speichern
+                </button>{" "}
+                <button
+                  onClick={(e) => zurucksetzen(e)}
+                  className="btn btn-success"
+                >
+                  Zurücksetzen
                 </button>{" "}
                 <Link to={"/kurse"} className="btn btn-danger" href="">
                   Stornieren

@@ -62,8 +62,8 @@ const ListKursComponent = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Beschreibung</th>
-            <th>Start</th>
-            <th>Ende</th>
+            {/* <th>Start</th>
+            <th>Ende</th> */}
             <th>Dozenten ID</th>
             <th>Dozenten Vorname</th>
             <th>Dozenten Nachname</th>
@@ -81,8 +81,8 @@ const ListKursComponent = () => {
                 <td>{kurs.kurs_id}</td>
                 <td>{kurs.kurs_name}</td>
                 <td>{kurs.kurs_beschreibung}</td>
-                <td>{kurs.kurs_start_datum}</td>
-                <td>{kurs.kurs_end_datum}</td>
+                {/* <td>{kurs.kurs_start_datum}</td>
+                <td>{kurs.kurs_end_datum}</td> */}
                 <td>{kurs.fk_dozent_id}</td>
                 <td>{kurs.dozent_vorname}</td>
                 <td>{kurs.dozent_nachname}</td>
