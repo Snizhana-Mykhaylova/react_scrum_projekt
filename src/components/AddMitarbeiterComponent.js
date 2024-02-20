@@ -66,7 +66,13 @@ const AddMitarbeiterComponent = () => {
     if (
       mitarbeiterData.vorname !== "" &&
       mitarbeiterData.nachname !== "" &&
-      mitarbeiterData.email !== ""
+      mitarbeiterData.position !== ""&&
+      mitarbeiterData.phone !== "" &&
+      mitarbeiterData.plz !== "" &&
+      mitarbeiterData.ort !== "" &&
+      mitarbeiterData.strasse !== "" &&
+      mitarbeiterData.email !== "" &&
+      mitarbeiterData.hause_nr !== "" 
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {

@@ -59,7 +59,14 @@ const AddTeilnehmerComponent = () => {
     if (
       teilnehmerData.vorname !== "" &&
       teilnehmerData.nachname !== "" &&
-      teilnehmerData.email !== ""
+      teilnehmerData.email !== "" &&
+      teilnehmerData.vorname !== "" &&
+      teilnehmerData.nachname !== "" &&
+      teilnehmerData.ort !== "" &&
+      teilnehmerData.straße !== "" &&
+      teilnehmerData.hause_nr !== "" &&
+      teilnehmerData.plz !== "" &&
+      teilnehmerData.phone !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
