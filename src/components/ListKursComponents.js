@@ -14,7 +14,6 @@ const ListKursComponent = () => {
 
   useEffect(() => {
     getKurs();
-
   }, []);
 
   function getKurs() {
@@ -25,8 +24,6 @@ const ListKursComponent = () => {
       .catch((e) => console.log(e));
   }
 
-
-
   function deleteKurs(e, id) {
     e.preventDefault();
     console.log(id);
@@ -36,6 +33,7 @@ const ListKursComponent = () => {
   }
 
   return (
+    
     <div className="container">
       <div className="input-group mb-3">
         <input
@@ -54,7 +52,9 @@ const ListKursComponent = () => {
           </span>
         </div>
       </div>
-
+      <Link to={"/add-kurs"} className="btn btn-primary mb-2 mt-3" href="">
+        Add Kurs
+      </Link>
       <h2 className="text-center mb-4">List Kurs</h2>
       <table className="table table-bordered table striped">
         <thead>
@@ -62,8 +62,7 @@ const ListKursComponent = () => {
             <th>ID</th>
             <th>Name</th>
             <th>Beschreibung</th>
-            {/* <th>Start</th>
-            <th>Ende</th> */}
+
             <th>Dozenten ID</th>
             <th>Dozenten Vorname</th>
             <th>Dozenten Nachname</th>
@@ -71,7 +70,8 @@ const ListKursComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {kursArray.filter((kurs) => {
+          {kursArray
+            .filter((kurs) => {
               return search.toLowerCase() === ""
                 ? kurs
                 : kurs.kurs_name.toLowerCase().includes(search);
@@ -81,8 +81,6 @@ const ListKursComponent = () => {
                 <td>{kurs.kurs_id}</td>
                 <td>{kurs.kurs_name}</td>
                 <td>{kurs.kurs_beschreibung}</td>
-                {/* <td>{kurs.kurs_start_datum}</td>
-                <td>{kurs.kurs_end_datum}</td> */}
                 <td>{kurs.fk_dozent_id}</td>
                 <td>{kurs.dozent_vorname}</td>
                 <td>{kurs.dozent_nachname}</td>
@@ -109,9 +107,7 @@ const ListKursComponent = () => {
         </tbody>
       </table>
 
-      <Link to={"/add-kurs"} className="btn btn-primary mb-2 mt-3" href="">
-        Add Kurs
-      </Link>
+      
     </div>
   );
 };

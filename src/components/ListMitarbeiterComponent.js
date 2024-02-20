@@ -6,28 +6,31 @@ import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
 const ListMitarbeiterComponent = () => {
-  const [MitarbeiterArray, setMitarbeiterArray] = useState([]);
+  const [mitarbeiterArray, setMitarbeiterArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     getMitarbeiter();
   }, []);
 
-  function getMitarbeiter() {
+  const getMitarbeiter = () => {
     MitarbeiterService.getMitarbeiter()
       .then((res) => {
         setMitarbeiterArray(res.data);
       })
-      .catch((e) => console.log(e));
-  }
+      .catch((error) => console.log(error));
+  };
 
-  function deleteMitarbeiter(e, id) {
+  const deleteMitarbeiter = (e, id) => {
     e.preventDefault();
-    console.log(id);
-    MitarbeiterService.deleteMitarbeiter(id)
-      .then(window.location.reload(true))
-      .catch((e) => console.log(e));
-  }
+    if (window.confirm("WILLST DU Mitarbeiter LÖSCHEN?")) {
+      MitarbeiterService.deleteMitarbeiter(id)
+        .then(() => {
+          getMitarbeiter();
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   return (
     <div className="container">
@@ -38,8 +41,8 @@ const ListMitarbeiterComponent = () => {
           }}
           type="text"
           className="form-control"
-          placeholder="Suchen nach Nachname"
-          aria-label="Suchen"
+          placeholder="Search by Nachname"
+          aria-label="Search"
           aria-describedby="basic-addon2"
         />
         <div className="input-group-append">
@@ -49,8 +52,15 @@ const ListMitarbeiterComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Mitarbeiter</h2>
-      <table className="table table-bordered table striped">
+      <h2 className="text-center mb-4">List of Mitarbeiter</h2>
+      <Link
+        to={"/add-mitarbeiter"}
+        className="btn btn-primary mb-2 mt-3"
+        href=""
+      >
+        Add Mitarbeiter
+      </Link>
+      <table className="table table-bordered table-striped">
         <thead>
           <tr>
             <th>ID</th>
@@ -64,55 +74,42 @@ const ListMitarbeiterComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {MitarbeiterArray.filter((item) => {
-            return search.toLowerCase() === ""
-              ? item
-              : item.mitarbeiter_nachname.toLowerCase().includes(search);
-          }).map((mitarbeiter) => (
-            <tr
-              key={mitarbeiter.mitarbeiter_id}
-              id={mitarbeiter.mitarbeiter_id}
-            >
-              <td>{mitarbeiter.mitarbeiter_id}</td>
-              <td>{mitarbeiter.mitarbeiter_vorname}</td>
-              <td>{mitarbeiter.mitarbeiter_nachname}</td>
-              <td>{mitarbeiter.kd_email}</td>
-              <td>{mitarbeiter.kd_phone_nr}</td>
-              <td>
-                {mitarbeiter.kd_ort} {mitarbeiter.kd_plz}{" "}
-                {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}
-              </td>
-              <td>{mitarbeiter.mitarbeiter_position}</td>
-
-              <td>
-                <Link
-                  to={`/add-mitarbeiter/${mitarbeiter.mitarbeiter_id}`}
-                  className="btn btn-info action"
-                >
-                  <EditIcon />
-                </Link>
-                <Link
-                  onClick={(e) => {
-                    deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id);
-                  }}
-                  className="btn btn-danger"
-                  href=""
-                >
-                  <DeleteIcon />
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {mitarbeiterArray
+            .filter((mitarbeiter) =>
+              mitarbeiter.mitarbeiter_nachname
+                .toLowerCase()
+                .includes(search.toLowerCase())
+            )
+            .map((mitarbeiter) => (
+              <tr key={mitarbeiter.mitarbeiter_id}>
+                <td>{mitarbeiter.mitarbeiter_id}</td>
+                <td>{mitarbeiter.mitarbeiter_vorname}</td>
+                <td>{mitarbeiter.mitarbeiter_nachname}</td>
+                <td>{mitarbeiter.kd_email}</td>
+                <td>{mitarbeiter.kd_phone_nr}</td>
+                <td>
+                  {mitarbeiter.kd_ort} {mitarbeiter.kd_plz}{" "}
+                  {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}
+                </td>
+                <td>{mitarbeiter.mitarbeiter_position}</td>
+                <td>
+                  <Link
+                    to={`/add-mitarbeiter/${mitarbeiter.mitarbeiter_id}`}
+                    className="btn btn-info action"
+                  >
+                    <EditIcon />
+                  </Link>
+                  <button
+                    onClick={(e) => deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id)}
+                    className="btn btn-danger"
+                  >
+                    <DeleteIcon />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
-
-      <Link
-        to={"/add-mitarbeiter"}
-        className="btn btn-primary mb-2 mt-3"
-        href=""
-      >
-        Add Mitarbeiter
-      </Link>
     </div>
   );
 };

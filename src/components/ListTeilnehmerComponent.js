@@ -6,28 +6,30 @@ import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 
 const ListTeilnehmerComponent = () => {
-  const [TeilnehmerArray, setTeilnehmerArray] = useState([]);
+  const [teilnehmerArray, setTeilnehmerArray] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     getTeilnehmer();
   }, []);
 
-  function getTeilnehmer() {
+  const getTeilnehmer = () => {
     TeilnehmerService.getTeilnehmer()
       .then((res) => {
         setTeilnehmerArray(res.data);
       })
-      .catch((e) => console.log(e));
-  }
+      .catch((error) => console.log(error));
+  };
 
-  function deleteTeilnehmer(e, id) {
-    e.preventDefault();
-    console.log(id);
-    TeilnehmerService.deleteTeilnehmer(id)
-      .then(window.location.reload(true))
-      .catch((e) => console.log(e));
-  }
+  const deleteTeilnehmer = (id) => {
+    if (window.confirm("WILLST DU TEILNEHMER LÖSCHEN?")) {
+      TeilnehmerService.deleteTeilnehmer(id)
+        .then(() => {
+          getTeilnehmer();
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   return (
     <div className="container">
@@ -38,8 +40,8 @@ const ListTeilnehmerComponent = () => {
           }}
           type="text"
           className="form-control"
-          placeholder="Suchen nach Nachname"
-          aria-label="Suchen"
+          placeholder="Search by Nachname"
+          aria-label="Search"
           aria-describedby="basic-addon2"
         />
         <div className="input-group-append">
@@ -49,8 +51,14 @@ const ListTeilnehmerComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Schüler</h2>
-      <table className="table table-bordered table striped">
+      <h2 className="text-center mb-4">List of Schüler</h2>
+      <Link
+        to={"/add-teilnehmer"}
+        className="btn btn-primary mb-2 mt-3"
+      >
+        Add Schüler
+      </Link>
+      <table className="table table-bordered table-striped">
         <thead>
           <tr>
             <th>ID</th>
@@ -63,51 +71,39 @@ const ListTeilnehmerComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {TeilnehmerArray.filter((item) => {
-            return search.toLowerCase() === ""
-              ? item
-              : item.teilnehmer_nachname.toLowerCase().includes(search);
-          }).map((teilnehmer) => (
-            <tr key={teilnehmer.teilnehmer_id} id={teilnehmer.teilnehmer_id}>
-              <td>{teilnehmer.teilnehmer_id}</td>
-              <td>{teilnehmer.teilnehmer_vorname}</td>
-              <td>{teilnehmer.teilnehmer_nachname}</td>
-              <td>{teilnehmer.kd_email}</td>
-              <td>{teilnehmer.kd_phone_nr}</td>
-              <td>
-                {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
-                {teilnehmer.kd_haus_nr}
-              </td>
-
-              <td>
-                <Link
-                  to={`/add-teilnehmer/${teilnehmer.teilnehmer_id}`}
-                  className="btn btn-info action"
-                >
-                  <EditIcon />
-                </Link>
-                <Link
-                  onClick={(e) => {
-                    console.log(e, teilnehmer.teilnehmer_id);
-                    deleteTeilnehmer(e, teilnehmer.teilnehmer_id);
-                  }}
-                  className="btn btn-danger"
-                >
-                  <DeleteIcon />
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {teilnehmerArray
+            .filter((teilnehmer) =>
+              teilnehmer.teilnehmer_nachname.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((teilnehmer) => (
+              <tr key={teilnehmer.teilnehmer_id}>
+                <td>{teilnehmer.teilnehmer_id}</td>
+                <td>{teilnehmer.teilnehmer_vorname}</td>
+                <td>{teilnehmer.teilnehmer_nachname}</td>
+                <td>{teilnehmer.kd_email}</td>
+                <td>{teilnehmer.kd_phone_nr}</td>
+                <td>
+                  {teilnehmer.kd_ort} {teilnehmer.kd_plz}{" "}
+                  {teilnehmer.kd_straße} {teilnehmer.kd_haus_nr}
+                </td>
+                <td>
+                  <Link
+                    to={`/add-teilnehmer/${teilnehmer.teilnehmer_id}`}
+                    className="btn btn-info action"
+                  >
+                    <EditIcon />
+                  </Link>
+                  <button
+                    onClick={() => deleteTeilnehmer(teilnehmer.teilnehmer_id)}
+                    className="btn btn-danger"
+                  >
+                    <DeleteIcon />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
-
-      <Link
-        to={"/add-teilnehmer"}
-        className="btn btn-primary mb-2 mt-3"
-        href=""
-      >
-        Add Schüler
-      </Link>
     </div>
   );
 };
