@@ -5,11 +5,18 @@ const FooterComponent = () => {
     <div>
       <footer>
         <footer className="bg-dark text-center text-white">
-          <div className="container p-4">
-            <section className="mb-4">
+          <div className="container">
+            <section className="footer_section">
               <p>
-                Talentschmiede CBM Unser Ziel - Ihre persönliche
-                Weiterentwicklung und berufliche Selbstverwirklichung!
+                Weiterbildung-ComKollege GmbH
+                <br></br>
+                Vertreten durch Khairalla, Tarik (Geschäftsführung)
+                <br></br>
+                Hobbitweg 42
+                <br></br>
+                01337 Auenland
+                <br></br>
+                USt.-ID: DE424201337
               </p>
             </section>
           </div>
