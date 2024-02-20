@@ -6,7 +6,7 @@ import AddMitarbeiterComponent from "./components/AddMitarbeiterComponent";
 import ListTeilnehmerComponent from "./components/ListTeilnehmerComponent";
 import AddTeilnehmerComponent from "./components/AddTeilnehmerComponent";
 import ListDozentComponent from "./components/ListDozentComponent";
-
+import KursDetailsComponents from "./components/KursDetailsComponents";
 import AddDozentenComponent from "./components/AddDozentComponent";
 
 import ListKursComponent from "./components/ListKursComponents";
@@ -18,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+       
         <HeaderComponent />
         <div className="container">
           <Routes>
@@ -47,6 +48,7 @@ function App() {
             <Route path="/add-dozent/:id" element={<AddDozentenComponent />} />
             <Route path="/add-kurs" element={<AddKursComponent />} />
             <Route path="/add-kurs/:id" element={<AddKursComponent />} />
+            <Route path="/kurs_details/:id" element={<KursDetailsComponents/>} />
           </Routes>
         </div>
         <FooterComponent />
