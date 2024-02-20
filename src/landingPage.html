@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./index.css">
+    <style>
+      .rounded-t-5 {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+      }
+
+      @media (min-width: 992px) {
+        .rounded-tr-lg-0 {
+          border-top-right-radius: 0;
+        }
+        
+        .rounded-bl-lg-5 {
+          border-bottom-left-radius: 0.5rem;
+        }
+    }
+    .main-body {
+      margin: 0 20%;
+      padding-top: 0px;
+    }
+      
+    </style>
+  </head>
+  <body>
+    <div class="headerbackground">
+        <div class="container">
+          <div class="header">
+            <div>
+              <a href="./landingPage.html">
+                <img class="logo" src="./img/logo.png" alt="logo">
+              </a>
+            </div>
+            <div class="header-right">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="main-body">
+      <section class="text-center text-lg-start">
+        <div class="card mb-3">
+          <div class="row g-0 d-flex align-items-center">
+            <div class="col-lg-4 d-none d-lg-flex">
+              <img
+                src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+                alt="Trendy Pants and Shoes"
+                class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5"
+              />
+            </div>
+            <div class="col-lg-8">
+              <div class="card-body py-5 px-md-5">
+                <form>
+                  <div class="form-outline mb-4">
+                    <input
+                      type="email"
+                      id="form2Example1"
+                      class="form-control"
+                    />
+                    <label class="form-label email" for="form2Example1">
+                      Email address
+                    </label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input
+                      type="password"
+                      id="form2Example2"
+                      class="form-control"
+                    />
+                    <label class="form-label password" for="form2Example2">
+                      Password
+                    </label>
+                  </div>
+
+                  <div class="row mb-4">
+                    <div class="col d-flex justify-content-center">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="form2Example31"
+                        />
+                        <label class="form-check-label" for="form2Example31">
+                          Remember me
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <a href="#!">Forgot password?</a>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block mb-4 sign-in" onclick="login()">
+                    Sign in
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="./landingPageIndex.js"></script>
+  </body>
+</html>
