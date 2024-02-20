@@ -28,8 +28,10 @@ class KursService {
   deleteKurs(id) {
     return axios.delete(`${link}/delete_kurs/${id}`);
   }
+  deleteDozenten(id, kursData) {
+    return axios.put(`${link}/update_kurs_dozenzdelete/${id}`, kursData)
 }
-
+}
 var kursService = new KursService();
 
 export default kursService;

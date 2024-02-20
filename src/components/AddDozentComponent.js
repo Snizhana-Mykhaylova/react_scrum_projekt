@@ -62,7 +62,13 @@ const AddDozentenComponent = () => {
     if (
       dozentenData.vorname !== "" &&
       dozentenData.nachname !== "" &&
-      dozentenData.email !== ""
+      dozentenData.email !== "" &&
+      dozentenData.fachgebiet !== "" &&
+      dozentenData.phone !== "" &&
+      dozentenData.plz !== "" &&
+      dozentenData.ort !== "" &&
+      dozentenData.strasse !== "" &&
+      dozentenData.hause_nr !== "" 
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
@@ -103,6 +109,7 @@ const AddDozentenComponent = () => {
                     value={vorname}
                     onChange={(e) => setVorname(e.target.value)}
                     type="text"
+                    required
                     placeholder="Vorname"
                   />
                 </div>
@@ -112,6 +119,7 @@ const AddDozentenComponent = () => {
                     value={nachname}
                     onChange={(e) => setNachname(e.target.value)}
                     type="text"
+                    required
                     placeholder="Nachname"
                   />
                 </div>
@@ -121,6 +129,7 @@ const AddDozentenComponent = () => {
                     value={fachgebiet}
                     onChange={(e) => setfachgebiet(e.target.value)}
                     type="text"
+                    required
                     placeholder="Fachgebiet"
                   />
                 </div>
@@ -130,6 +139,7 @@ const AddDozentenComponent = () => {
                     value={phone}
                     onChange={(e) => setTelefon(e.target.value)}
                     type="text"
+                    required
                     placeholder="Telefon"
                   />
                 </div>
@@ -139,6 +149,7 @@ const AddDozentenComponent = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
+                    required
                     placeholder="Email"
                   />
                 </div>
@@ -147,7 +158,8 @@ const AddDozentenComponent = () => {
                     className="form-control"
                     value={plz}
                     onChange={(e) => setPlz(e.target.value)}
-                    type="text"
+                    type="text"required
+                    
                     placeholder="Plz"
                   />
                 </div>
@@ -157,6 +169,7 @@ const AddDozentenComponent = () => {
                     value={ort}
                     onChange={(e) => setOrt(e.target.value)}
                     type="text"
+                    required
                     placeholder="Ort"
                   />
                 </div>
@@ -166,6 +179,7 @@ const AddDozentenComponent = () => {
                     value={strasse}
                     onChange={(e) => setStrasse(e.target.value)}
                     type="text"
+                    required
                     placeholder="Strasse"
                   />
                 </div>
@@ -175,6 +189,7 @@ const AddDozentenComponent = () => {
                     value={hause_nr}
                     onChange={(e) => setHausNummer(e.target.value)}
                     type="text"
+                    required
                     placeholder="Haus Nummer"
                   />
                 </div>
