@@ -3,73 +3,80 @@ import KursService from "../services/KursService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const AddKursComponent = () => {
-  const [name, setKursName] = useState("");
-  const [beschreibung, setBeschreibung] = useState("");
-  const [startDatum, setStartDatum] = useState("");
-  const [endDatum, setEndDatum] = useState("");
-  const [dozentId, setDozentId] = useState("");
-  const [dozentVorname, setDozentVorname] = useState("");
-  const [dozentNachname, setDozentNachname] = useState("");
+  const [kurs_name, setKursName] = useState("");
+  const [kurs_beschreibung, setBeschreibung] = useState("");
+  const [kurs_start_datum, setStartDatum] = useState("");
+  const [kurs_end_datum, setEndDatum] = useState("");
+  const [fk_dozent_id, setDozentId] = useState("");
+  const [dozent_vorname, setDozentVorname] = useState("");
+  const [dozent_nachname, setDozentNachname] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
   const kursData = {
-    name,
-    beschreibung,
-    startDatum,
-    endDatum,
-    dozentId,
-    dozentVorname,
-    dozentNachname,
+    kurs_name,
+    kurs_beschreibung,
+    kurs_start_datum,
+    kurs_end_datum,
+    fk_dozent_id,
+    dozent_vorname,
+    dozent_nachname,
   };
 
   useEffect(() => {
     if (id) {
       KursService.getKursById(id)
         .then((res) => {
-          const {
-            kurs_name,
-            kurs_beschreibung,
-            kurs_start_datum,
-            kurs_end_datum,
-            fk_dozent_id,
-          } = res.data.kurs[0];
-          const { dozent_vorname, dozent_nachname } = res.data.dozentenDaten[0];
-          setKursName(kurs_name);
-          setBeschreibung(kurs_beschreibung);
-          setStartDatum(kurs_start_datum);
-          setEndDatum(kurs_end_datum);
-          setDozentId(fk_dozent_id);
-          setDozentVorname(dozent_vorname);
-          setDozentNachname(dozent_nachname);
+          console.log(res);
+          if (res.data.kurse || res.data.kurse.length > 0) {
+            const {
+              
+              kurs_name,
+              kurs_beschreibung,
+              kurs_start_datum,
+              kurs_end_datum,
+              fk_dozent_id,
+              dozent_vorname,
+              dozent_nachname,
+              // dozent_fachgebiet,
+            } = res.data.kurse[0];
+            setKursName(kurs_name);
+            setBeschreibung(kurs_beschreibung);
+            setStartDatum(kurs_start_datum);
+            setEndDatum(kurs_end_datum);
+            setDozentId(fk_dozent_id);
+            setDozentVorname(dozent_vorname);
+            setDozentNachname(dozent_nachname);
+          } else {
+          
+            console.log("keine kursdaten");
+          }
         })
         .catch((e) => console.log(e));
     }
   }, [id]);
+  
 
   // senden data zu api und navigate wenn alles gut
   function speicherKurs(e) {
     e.preventDefault();
 
-    if (
-      kursData.name !== "" &&
-      kursData.beschreibung !== "" &&
-      kursData.startDatum !== ""
-    ) {
-      /**If id is present in the parameter, it should update else it should save */
+    if (kurs_name !== "" && kurs_beschreibung !== "" && kurs_start_datum !== "") {
       if (id) {
         KursService.updateKurs(id, kursData)
-          .then(navigate("/kurs"))
+          .then(() => {
+            navigate("/kurse");
+          })
           .catch((e) => console.log(e));
-        window.location.reload();
       } else {
         KursService.speicherKurs(kursData)
-          .then(navigate("/kurs"))
+          .then(() => {
+            navigate("/kurse");
+          })
           .catch((e) => console.log(e));
-        window.location.reload();
       }
     } else {
-      alert("Please, fill in all inputes");
+      alert("Bitte füllen Sie alle Felder aus");
     }
   }
 
@@ -94,7 +101,7 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={name}
+                    value={kurs_name}
                     onChange={(e) => setKursName(e.target.value)}
                     type="text"
                     placeholder="Name"
@@ -103,7 +110,7 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={beschreibung}
+                    value={kurs_beschreibung}
                     onChange={(e) => setBeschreibung(e.target.value)}
                     type="text"
                     placeholder="Beschreibung"
@@ -112,25 +119,25 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={startDatum}
+                    value={kurs_start_datum}
                     onChange={(e) => setStartDatum(e.target.value)}
-                    type="text"
+                    type="date"
                     placeholder="Start"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={endDatum}
+                    value={kurs_end_datum}
                     onChange={(e) => setEndDatum(e.target.value)}
-                    type="text"
+                    type="date"
                     placeholder="Ende"
                   />
                 </div>
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentId}
+                    value={fk_dozent_id}
                     onChange={(e) => setDozentId(e.target.value)}
                     type="text"
                     placeholder="DozentenId"
@@ -139,7 +146,7 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentVorname}
+                    value={dozent_vorname}
                     onChange={(e) => setDozentVorname(e.target.value)}
                     type="text"
                     placeholder="DozentenVorname"
@@ -148,7 +155,7 @@ const AddKursComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={dozentNachname}
+                    value={dozent_nachname}
                     onChange={(e) => setDozentNachname(e.target.value)}
                     type="text"
                     placeholder="DozentenNachname"
@@ -160,7 +167,7 @@ const AddKursComponent = () => {
                 >
                   Speichern
                 </button>{" "}
-                <Link to={"/kurs"} className="btn btn-danger" href="">
+                <Link to={"/kurse"} className="btn btn-danger" href="">
                   Stornieren
                 </Link>
               </form>

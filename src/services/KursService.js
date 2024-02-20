@@ -13,7 +13,7 @@ class KursService {
 
   getKursById(id) {
     console.log(id);
-    return axios.get(`${link}/getAll_kurs/${id}`);
+    return axios.get(`${link}/get_one_kurs/${id}`);
   }
 
   speicherKurs(kursData) {

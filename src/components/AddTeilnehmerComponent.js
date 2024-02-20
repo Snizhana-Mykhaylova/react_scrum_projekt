@@ -82,9 +82,9 @@ const AddTeilnehmerComponent = () => {
 
   function title() {
     if (id) {
-      return "Teilnehmer bearbeiten";
+      return "Schüler bearbeiten";
     } else {
-      return "Teilnehmer hinzufügen";
+      return "Schüler hinzufügen";
     }
   }
 

@@ -49,7 +49,7 @@ const ListTeilnehmerComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List Teilnehmer</h2>
+      <h2 className="text-center mb-4">List Schüler</h2>
       <table className="table table-bordered table striped">
         <thead>
           <tr>
@@ -106,7 +106,7 @@ const ListTeilnehmerComponent = () => {
         className="btn btn-primary mb-2 mt-3"
         href=""
       >
-        Add Teilnehmer
+        Add Schüler
       </Link>
     </div>
   );

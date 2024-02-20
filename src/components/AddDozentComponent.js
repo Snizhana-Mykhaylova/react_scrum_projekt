@@ -29,13 +29,10 @@ const AddDozentenComponent = () => {
 
   useEffect(() => {
     if (id) {
-       DozentenService.getDozentById(id)
+      DozentenService.getDozentById(id)
         .then((res) => {
-          const {
-            dozent_vorname,
-            dozent_nachname,
-            dozent_fachgebiet,
-          } = res.data.dozenten[0];
+          const { dozent_vorname, dozent_nachname, dozent_fachgebiet } =
+            res.data.dozenten[0];
           const {
             kd_email,
             kd_haus_nr,
@@ -56,7 +53,7 @@ const AddDozentenComponent = () => {
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   // senden data zu api und navigate wenn alles gut
   function speicherDozenten(e) {
@@ -65,7 +62,7 @@ const AddDozentenComponent = () => {
     if (
       dozentenData.vorname !== "" &&
       dozentenData.nachname !== "" &&
-      dozentenData.email != ""
+      dozentenData.email !== ""
     ) {
       /**If id is present in the parameter, it should update else it should save */
       if (id) {
