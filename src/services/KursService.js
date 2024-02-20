@@ -22,6 +22,7 @@ class KursService {
   }
 
   deleteKurs(id) {
+    console.log(id)
     return axios.delete(`${link}/delete_kurs/${id}`);
   }
 
