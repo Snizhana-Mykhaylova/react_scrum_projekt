@@ -1,18 +1,67 @@
 import React from "react";
 
-import buchImg from "../img/buch.jpg";
+import csharpImg from "../img/cis.png";
+import cppImg from "../img/cpp.png";
+import sqlImg from "../img/SQL.png";
 import workspacebackgroundImg from "../img/workspacebackground.png";
 import workspaceImg from "../img/workspace.jpg";
+
+import Carousel from 'react-bootstrap/Carousel';
+// import ExampleCarouselImage from 'components/ExampleCarouselImage';
 
 const MainComponent = () => {
   return (
     <main className="container">
+            <section className="baner2">
+        <div className="beschreibung">
+          <h2>Flexible einsatzmöglichkeiten</h2>
+
+          <p>
+            Egal ob zuhause am Computer, im Garten am Tablet oder unterwegs über
+            das Smartphone, unsere webapp lässt sich auf nahezu allen
+            betriebssystemen die einen Webbrowser öffnen können, verwenden. Der
+            Anwender hat die möglichkeit von "überall" aus, sein Unternehmen mit
+            leichtigkeit zu verwalten.{" "}
+          </p>
+        </div>
+        <img className="workspace" src={workspaceImg} alt="" />
+      </section>
+      <section>
+    <Carousel className="carousel_item">
+      <Carousel.Item >
+      <img src={sqlImg} className="card-img-top" alt="kurs1" />
+        <Carousel.Caption>
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item >
+      <img src={csharpImg} className="card-img-top" alt="kurs2" />
+        <Carousel.Caption>
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item >
+      
+      <Carousel.Item >
+      <img src={cppImg} className="card-img-top" alt="kurs3" />
+        <Carousel.Caption> 
+          <h3>Third slide label</h3>
+          <p>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+       
+      </section>
       <section className="baner">
         <div className="banerText">
-          <h2>Die COMKOLLEGE verwaltungs web-App</h2>
+          <h2>Die ComKollege verwaltungs web-App</h2>
           <p>
-            Mit unserer Innovativen web app ermöglichen wir dem anwender eine
-            übersichtliche verwaltung seiner Vakanzen, sowie die erstellung von
+            Mit unserer Innovativen web app ermöglichen wir dem Anwender eine
+            übersichtliche Verwaltung seiner Vakanzen, sowie die erstellung von
             Kurs Modulen mit der möglichkeit Dozenten, Teilnehmer und
             Mitarbeiter zuzuweisen.
           </p>
@@ -25,59 +74,7 @@ const MainComponent = () => {
         />
       </section>
 
-      <section className="beschreibung">
-        <p>Beschreibung</p>
-        <h2>Flexible einsatzmöglichkeiten</h2>
-        <p>
-          Egal ob zuhause am Computer, im garten am Tablet oder unterwegs über
-          das Smartphone, unsere webapp lässt sich auf nahezu allen
-          betriebssystemen die einen Webbrowser öffnen können, verwenden. Der
-          anwender hat die möglichkeit von "überall" aus, seine Firma mit
-          leichtigkeit zu verwalten.{" "}
-        </p>
-        <img className="workspace" src={workspaceImg} alt="" />
-      </section>
 
-      <section>
-        <ul className="kursCardList ">
-          <li className="kursCard">
-            <div className="card">
-              <img src={buchImg} className="card-img-top" alt="kurs1" />
-              <div className="card-body">
-                <h5 className="card-title">Kurse</h5>
-                <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="kursCard">
-            <div className="card">
-              <img src={buchImg} className="card-img-top" alt="kurs2" />
-              <div className="card-body">
-                <h5 className="card-title">Klassen</h5>
-                <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-            </div>
-          </li>
-          <li className="kursCard">
-            <div className="card">
-              <img src={buchImg} className="card-img-top" alt="kurs3" />
-              <div className="card-body">
-                <h5 className="card-title">Teilnehmer</h5>
-                <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </section>
     </main>
   );
 };

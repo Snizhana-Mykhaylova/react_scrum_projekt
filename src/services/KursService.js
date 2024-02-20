@@ -25,6 +25,7 @@ class KursService {
     return axios.delete(`${link}/delete_kurs/${id}`);
   }
 
+
   getTeilnehmerVonKurs(id) {
     return axios.get(`${link}/getTN_Fbuchung/${id}`);
   }
@@ -33,8 +34,12 @@ class KursService {
     return axios.post(`${link}/teilnehemr_kurs_insert/${id}`)
   }
 
+
+  deleteDozenten(id, kursData) {
+    return axios.put(`${link}/update_kurs_dozenzdelete/${id}`, kursData)
 }
 
+}
 var kursService = new KursService();
 
 export default kursService;
