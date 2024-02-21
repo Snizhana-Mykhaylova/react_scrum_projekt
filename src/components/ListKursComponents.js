@@ -86,7 +86,7 @@ const ListKursComponent = () => {
                 <td>{kurs.dozent_vorname}</td>
                 <td>{kurs.dozent_nachname}</td>
 
-                <td>
+                <td className="flex">
                   <Link
                     to={`/add-kurs/${kurs.kurs_id}`}
                     className="btn btn-info action"
@@ -98,7 +98,7 @@ const ListKursComponent = () => {
                     onClick={(e) => {
                       deleteKurs(e, kurs.kurs_id);
                     }}
-                    className="btn btn-danger"
+                    className="btn btn-danger action"
                     href=""
                   >
                     <DeleteIcon />
