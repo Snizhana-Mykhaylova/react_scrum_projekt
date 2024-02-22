@@ -97,6 +97,8 @@ section {
 
 .nav-link{
   margin-right: 15px;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .navlist > .nav-link:hover {
@@ -160,7 +162,7 @@ section {
 }
 .carousel_item {
   width: 672px;
-  height: 672px;
+  height: 372px;
 }
 
 
@@ -170,11 +172,11 @@ section {
 
 
 .modulContainer {
+  display: flex;
 }
 
 .modulText {
   padding-left: 500px;
-  padding-top: 300px;  
   
 }
 

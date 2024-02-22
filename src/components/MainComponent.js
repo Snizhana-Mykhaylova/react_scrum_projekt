@@ -43,86 +43,85 @@ const MainComponent = () => {
       <Carousel.Item >
       <img src={sqlImg} className="card-img-top" alt="kurs1" />
         <Carousel.Caption>
-          <h3></h3>
-          <p>Datenbanken</p>
+           {/* <p>Datenbanken</p> */}
         </Carousel.Caption>
       </Carousel.Item>
 
       <Carousel.Item >
       <img src={csharpImg} className="card-img-top" alt="kurs2" />
         <Carousel.Caption>
-          <h3></h3>
-          <p>OOP</p>
+          {/* <h3></h3>
+          <p>OOP</p> */}
         </Carousel.Caption>
       </Carousel.Item >
       
       <Carousel.Item >
       <img src={cppImg} className="card-img-top" alt="kurs3" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             Nur für die Absoluten Genies
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
     
     <Carousel.Item >
       <img src={javaImg} className="card-img-top" alt="kurs4" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             JS
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
     
       <Carousel.Item >
       <img src={htmlcssjsImg} className="card-img-top" alt="kurs5" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             Web Programmierung
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
       
       <Carousel.Item >
       <img src={phpImg} className="card-img-top" alt="kurs6" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             $
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
 
       <Carousel.Item >
       <img src={pythonImg} className="card-img-top" alt="kurs7" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             Meh
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
 
       <Carousel.Item >
       <img src={pctechImg} className="card-img-top" alt="kurs8" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             PC Technick & Betriebssysteme
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
 
       <Carousel.Item >
       <img src={cmotherImg} className="card-img-top" alt="kurs9" />
         <Carousel.Caption> 
-          <h3></h3>
+          {/* <h3></h3>
           <p>
             Mutter aller Sprachen
-          </p>
+          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
       
