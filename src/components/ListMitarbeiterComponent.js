@@ -22,7 +22,7 @@ const ListMitarbeiterComponent = () => {
   };
 
   const deleteMitarbeiter = (id) => {
-    if (window.confirm("WILLST DU Mitarbeiter LÖSCHEN?")) {
+    if (window.confirm("WILLST DU MITARBEITER LÖSCHEN?")) {
       MitarbeiterService.deleteMitarbeiter(id)
         .then(() => {
           getMitarbeiter();

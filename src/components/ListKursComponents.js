@@ -98,7 +98,7 @@ const ListKursComponent = () => {
                     to={`/add-kurs/${kurs.kurs_id}`}
                     className="btn btn-info action"
                   >
-                    <EditIcon />
+                    <EditIcon/>
                   </Link>
                   <Link
                     onClick={(e) => {
