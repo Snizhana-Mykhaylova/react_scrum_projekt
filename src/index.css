@@ -160,10 +160,11 @@ section {
   padding-bottom: 0px;
   
 }
-.carousel_item{
+.carousel_item {
   width: 672px;
   height: 372px;
 }
+
 
 .flex{
   display: flex;
@@ -178,3 +179,4 @@ section {
   padding-left: 500px;
   
 }
+

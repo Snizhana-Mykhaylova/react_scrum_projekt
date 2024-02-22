@@ -40,7 +40,7 @@ const ListTeilnehmerComponent = () => {
           }}
           type="text"
           className="form-control"
-          placeholder="Search by Nachname"
+          placeholder="Search"
           aria-label="Search"
           aria-describedby="basic-addon2"
         />
@@ -51,11 +51,8 @@ const ListTeilnehmerComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List of Schüler</h2>
-      <Link
-        to={"/add-teilnehmer"}
-        className="btn btn-primary mb-2 mt-3"
-      >
+      <h2 className="text-center mb-4">List Schüler</h2>
+      <Link to={"/add-teilnehmer"} className="btn btn-primary mb-2 mt-3">
         Add Schüler
       </Link>
       <table className="table table-bordered table-striped">
@@ -65,15 +62,26 @@ const ListTeilnehmerComponent = () => {
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Email</th>
-            <th>Telefon</th>
             <th>Adresse</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {teilnehmerArray
-            .filter((teilnehmer) =>
-              teilnehmer.teilnehmer_nachname.toLowerCase().includes(search.toLowerCase())
+            .filter(
+              (teilnehmer) =>
+                Object.values(teilnehmer)
+                  .filter(
+                    (value) =>
+                      typeof value === "string" &&
+                      value !== teilnehmer.kd_phone_nr
+                  )
+                  .some((value) =>
+                    value.toLowerCase().includes(search.toLowerCase())
+                  ) ||
+                teilnehmer.teilnehmer_id
+                  .toString()
+                  .includes(search.toLowerCase())
             )
             .map((teilnehmer) => (
               <tr key={teilnehmer.teilnehmer_id}>
@@ -81,10 +89,9 @@ const ListTeilnehmerComponent = () => {
                 <td>{teilnehmer.teilnehmer_vorname}</td>
                 <td>{teilnehmer.teilnehmer_nachname}</td>
                 <td>{teilnehmer.kd_email}</td>
-                <td>{teilnehmer.kd_phone_nr}</td>
                 <td>
-                  {teilnehmer.kd_ort} {teilnehmer.kd_plz}{" "}
-                  {teilnehmer.kd_straße} {teilnehmer.kd_haus_nr}
+                  {teilnehmer.kd_ort} {teilnehmer.kd_plz} {teilnehmer.kd_straße}{" "}
+                  {teilnehmer.kd_haus_nr}
                 </td>
                 <td>
                   <Link
