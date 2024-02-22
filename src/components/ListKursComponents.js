@@ -90,7 +90,6 @@ const ListKursComponent = () => {
                 <td>{kurs.fk_dozent_id}</td>
                 <td>{kurs.dozent_vorname}</td>
                 <td>{kurs.dozent_nachname}</td>
-                <td>
 
 
                 <td className="flex">
