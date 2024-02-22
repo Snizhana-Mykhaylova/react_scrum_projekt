@@ -38,7 +38,7 @@ const ListDozentComponent = () => {
           onChange={(e) => setSearch(e.target.value)}
           type="text"
           className="form-control"
-          placeholder="Search by last name"
+          placeholder="Search"
           aria-label="Search"
           aria-describedby="basic-addon2"
         />
@@ -49,7 +49,7 @@ const ListDozentComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List of Dozenten</h2>
+      <h2 className="text-center mb-4">List Dozenten</h2>
       <Link to={"/add-dozent"} className="btn btn-primary mb-2 mt-3" href="">
         Add Dozent
       </Link>
@@ -68,8 +68,20 @@ const ListDozentComponent = () => {
         </thead>
         <tbody>
           {dozenten
-            .filter((dozent) =>
-              dozent.dozent_nachname.toLowerCase().includes(search.toLowerCase())
+            .filter(
+              (dozent) =>
+                Object.values(dozent)
+                  .filter(
+                    (value) =>
+                      typeof value === "string" &&
+                      value !== dozent.kd_phone_nr
+                  )
+                  .some((value) =>
+                    value.toLowerCase().includes(search.toLowerCase())
+                  ) ||
+                  dozent.dozent_id
+                  .toString()
+                  .includes(search.toLowerCase())
             )
             .map((dozent) => (
               <tr key={dozent.dozent_id}>

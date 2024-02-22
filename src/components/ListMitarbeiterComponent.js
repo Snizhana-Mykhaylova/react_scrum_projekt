@@ -21,8 +21,7 @@ const ListMitarbeiterComponent = () => {
       .catch((error) => console.log(error));
   };
 
-  const deleteMitarbeiter = (e, id) => {
-    e.preventDefault();
+  const deleteMitarbeiter = (id) => {
     if (window.confirm("WILLST DU Mitarbeiter LÖSCHEN?")) {
       MitarbeiterService.deleteMitarbeiter(id)
         .then(() => {
@@ -36,12 +35,10 @@ const ListMitarbeiterComponent = () => {
     <div className="container">
       <div className="input-group mb-3">
         <input
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
           className="form-control"
-          placeholder="Search by Nachname"
+          placeholder="Search"
           aria-label="Search"
           aria-describedby="basic-addon2"
         />
@@ -52,7 +49,7 @@ const ListMitarbeiterComponent = () => {
         </div>
       </div>
 
-      <h2 className="text-center mb-4">List of Mitarbeiter</h2>
+      <h2 className="text-center mb-4">List Mitarbeiter</h2>
       <Link
         to={"/add-mitarbeiter"}
         className="btn btn-primary mb-2 mt-3"
@@ -67,7 +64,6 @@ const ListMitarbeiterComponent = () => {
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Email</th>
-            <th>Telefon</th>
             <th>Adresse</th>
             <th>Position</th>
             <th>Actions</th>
@@ -75,10 +71,20 @@ const ListMitarbeiterComponent = () => {
         </thead>
         <tbody>
           {mitarbeiterArray
-            .filter((mitarbeiter) =>
-              mitarbeiter.mitarbeiter_nachname
-                .toLowerCase()
-                .includes(search.toLowerCase())
+            .filter(
+              (mitarbeiter) =>
+                Object.values(mitarbeiter)
+                  .filter(
+                    (value) =>
+                      typeof value === "string" &&
+                      value !== mitarbeiter.kd_phone_nr
+                  )
+                  .some((value) =>
+                    value.toLowerCase().includes(search.toLowerCase())
+                  ) ||
+                mitarbeiter.mitarbeiter_id
+                  .toString()
+                  .includes(search.toLowerCase())
             )
             .map((mitarbeiter) => (
               <tr key={mitarbeiter.mitarbeiter_id}>
@@ -86,7 +92,6 @@ const ListMitarbeiterComponent = () => {
                 <td>{mitarbeiter.mitarbeiter_vorname}</td>
                 <td>{mitarbeiter.mitarbeiter_nachname}</td>
                 <td>{mitarbeiter.kd_email}</td>
-                <td>{mitarbeiter.kd_phone_nr}</td>
                 <td>
                   {mitarbeiter.kd_ort} {mitarbeiter.kd_plz}{" "}
                   {mitarbeiter.kd_straße} {mitarbeiter.kd_haus_nr}
@@ -100,7 +105,9 @@ const ListMitarbeiterComponent = () => {
                     <EditIcon />
                   </Link>
                   <button
-                    onClick={(e) => deleteMitarbeiter(e, mitarbeiter.mitarbeiter_id)}
+                    onClick={() =>
+                      deleteMitarbeiter(mitarbeiter.mitarbeiter_id)
+                    }
                     className="btn btn-danger"
                   >
                     <DeleteIcon />
