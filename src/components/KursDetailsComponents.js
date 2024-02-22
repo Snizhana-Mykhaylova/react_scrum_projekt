@@ -107,23 +107,20 @@ const KursDetailsComponents = () => {
       .catch((e) => console.log(e));
   }
   
-
   return (
     <div className="container">
-      <h2 className="text-center mb-4">Kurs Details</h2>
-      <table className="table table-bordered table striped">
-        <thead>
+      <h2 className="text-center mb-6">Kurs Details</h2>
+      <table className="table table-bordered  text-center ">
+        <thead className="text-center">
           <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Beschreibung</th>
-            <th>Start</th>
-            <th>Ende</th>
+            {/* <th>Start</th>
+            <th>Ende</th> */}
             <th>Dozenten ID</th>
-            <th>Dozenten Vorname</th>
-            <th>Dozenten Nachname</th> 
-            
-            
+            <th>Dozenten</th>
+            <th>Teilnehmer ID</th>
             <th>Teilnehmer</th>
             <th>Teilnehmer hinzufügen</th>
             
@@ -133,15 +130,21 @@ const KursDetailsComponents = () => {
         <tbody>
           <tr key={id} id={id}>
             <td>{id}</td>
-            
             <td>{kurs_name}</td>
             <td>{kurs_beschreibung}</td>
-            <td>{kurs_start_datum}</td>
-            <td>{kurs_end_datum}</td>
+            {/* <td>{kurs_start_datum}</td>
+            <td>{kurs_end_datum}</td> */}
             <td>{fk_dozent_id}</td>
-            <td>{dozent_vorname}</td>
-            <td>{dozent_nachname}</td>
+            <td> <span>{dozent_vorname}</span><span>{" "}</span><span>{dozent_nachname}</span></td>
+            <td>{teilnehmer.map((el) => (
+                <ul>
+                  <li key={el.teilnehmer_id}>
+                    <span>{el.teilnehmer_id}</span>
+                  </li>
+                </ul>
+              ))}</td>
             <td>
+
             <FormGroup>
                 {teilnehmer.map((el) => (
                 <FormControlLabel
@@ -168,6 +171,7 @@ const KursDetailsComponents = () => {
               <Button variant="outlined">
                 Löschen
               </Button>
+
             </td>
             <td>
               {" "}
