@@ -32,7 +32,7 @@ class KursService {
   }
 
   postTeilnehmerZuKurs(id) {
-    return axios.post(`${link}/teilnehemr_kurs_insert/${id}`)
+    return axios.post(`${link}/tn_buchung_insert/${id}`)
   }
 
 

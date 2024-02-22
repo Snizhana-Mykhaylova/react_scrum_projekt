@@ -158,10 +158,11 @@ section {
   padding-bottom: 0px;
   
 }
-.carousel_item{
+.carousel_item {
   width: 672px;
   height: 672px;
 }
+
 
 .flex{
   display: flex;
@@ -169,7 +170,6 @@ section {
 
 
 .modulContainer {
-  
 }
 
 .modulText {
@@ -177,3 +177,4 @@ section {
   padding-top: 300px;  
   
 }
+
