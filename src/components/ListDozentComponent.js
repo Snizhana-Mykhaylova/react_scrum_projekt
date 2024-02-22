@@ -95,7 +95,7 @@ const ListDozentComponent = () => {
                   {dozent.kd_haus_nr}
                 </td>
                 <td>{dozent.dozent_fachgebiet}</td>
-                <td>
+                <td className="flex">
                   <Link
                     to={`/add-dozent/${dozent.dozent_id}`}
                     className="btn btn-info action"

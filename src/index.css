@@ -22,8 +22,10 @@ ul {
 }
 
 section {
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  font-size: 24px;
+  font-weight: 400;
 }
 .container {
   padding: 25px;
@@ -63,6 +65,8 @@ section {
   display: flex;
   padding-top: 50px;
   padding-bottom: 20px;
+  font-size: 24px;
+  font-weight: 400;
 }
 
 .header-right {
@@ -91,7 +95,11 @@ section {
   color: white;
 }
 
-.navlist > li:hover {
+.nav-link{
+  margin-right: 15px;
+}
+
+.navlist > .nav-link:hover {
   color: #f28c5c;
 }
 
@@ -148,8 +156,25 @@ section {
 .footer_section {
   padding-top: 0px;
   padding-bottom: 0px;
+  
 }
 .carousel_item {
   width: 672px;
   height: 672px;
 }
+
+
+.flex{
+  display: flex;
+}
+
+
+.modulContainer {
+}
+
+.modulText {
+  padding-left: 500px;
+  padding-top: 300px;  
+  
+}
+
