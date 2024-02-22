@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import KursService from "../services/KursService";
 import teilnehmerService from "../services/TeilnehmerService";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import { FormGroup, FormControlLabel, Checkbox, Button } from "@mui/material";
 
 const KursDetailsComponents = () => {
@@ -17,6 +17,7 @@ const KursDetailsComponents = () => {
 
   const [selectedItems, setSelectedItems] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getKursById(id);
@@ -24,9 +25,21 @@ const KursDetailsComponents = () => {
     getAlleTeilnehmer();
   }, [id]);
 
+  function addTeilnehmerZuKurs(teilnehmerList, id) {
+    const body = {
+      "teilnehmer_ids": teilnehmerList,
+      "k_id": id
+    }
+    KursService.postTeilnehmerZuKurs(body)
+      .then(() => {
+        (window.location.reload(true));
+    })
+    .catch((e) => console.log(e));
+  }
+
   function checkboxHandler(e) {
     let isSelected = e.target.checked;
-    let value = parseInt(e.target.value);
+    let value = parseInt( e.target.value);
 
     if (isSelected) {
       setSelectedItems([...selectedItems, value]);
@@ -40,7 +53,8 @@ const KursDetailsComponents = () => {
   }
 
   function submitHandler() {
-    console.log(selectedItems);
+   
+    addTeilnehmerZuKurs(selectedItems, id)
     setSelectedItems([]);
   }
 
@@ -130,19 +144,34 @@ const KursDetailsComponents = () => {
                 </ul>
               ))}</td>
             <td>
-              {teilnehmer.map((el) => (
-                <ul>
-                  <li key={el.teilnehmer_id}>
-                    <span>{el.teilnehmer_vorname}</span>
-                    <span>{" "}</span>
-                    <span>{el.teilnehmer_nachname}</span>
-                    
-                  </li>
-                </ul>
+
+            <FormGroup>
+                {teilnehmer.map((el) => (
+                <FormControlLabel
+                control={
+                  <Checkbox
+                    key={el.teilnehmer_id}
+                    value={el.teilnehmer_id}
+                    // onChange={checkboxHandler}
+                    // checked={selectedItems.includes(el.teilnehmer_id)}
+                  />
+                }
+                key={el.teilnehmer_id}
+                label={el.teilnehmer_vorname}
+              />
+                
+                  // <li key={el.teilnehmer_id}>
+                  //   <span>{el.teilnehmer_vorname}</span>
+                  //   <span>{el.teilnehmer_nachname}</span>
+                  // </li>
+       
+          
               ))}
-              {/* <Button onClick={submitHandler} variant="outlined">
-                  Löschen
-                </Button> */}
+             </FormGroup>
+              <Button variant="outlined">
+                Löschen
+              </Button>
+
             </td>
             <td>
               {" "}

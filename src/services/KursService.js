@@ -31,8 +31,8 @@ class KursService {
     return axios.get(`${link}/getTN_Fbuchung/${id}`);
   }
 
-  postTeilnehmerZuKurs(id) {
-    return axios.post(`${link}/tn_buchung_insert/${id}`)
+  postTeilnehmerZuKurs(body) {
+    return axios.post(`${link}/insert_tn_buchung/`, body)
   }
 
 
