@@ -179,4 +179,7 @@ section {
   padding-left: 500px;
   
 }
+.main {
+  min-height: 1050px;
+}
 
