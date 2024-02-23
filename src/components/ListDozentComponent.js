@@ -4,7 +4,7 @@ import DozentService from "../services/DozentService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
-
+import InfoIcon from "@mui/icons-material/Info";
 const ListDozentComponent = () => {
   const [dozenten, setDozenten] = useState([]);
   const [search, setSearch] = useState("");
@@ -63,7 +63,7 @@ const ListDozentComponent = () => {
             <th>Telefon</th>
             <th>Adresse</th>
             <th>Fachgebiet</th>
-            <th>Actions</th>
+            <th className="col-1">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -73,15 +73,12 @@ const ListDozentComponent = () => {
                 Object.values(dozent)
                   .filter(
                     (value) =>
-                      typeof value === "string" &&
-                      value !== dozent.kd_phone_nr
+                      typeof value === "string" && value !== dozent.kd_phone_nr
                   )
                   .some((value) =>
                     value.toLowerCase().includes(search.toLowerCase())
                   ) ||
-                  dozent.dozent_id
-                  .toString()
-                  .includes(search.toLowerCase())
+                dozent.dozent_id.toString().includes(search.toLowerCase())
             )
             .map((dozent) => (
               <tr key={dozent.dozent_id}>
@@ -96,19 +93,32 @@ const ListDozentComponent = () => {
                 </td>
                 <td>{dozent.dozent_fachgebiet}</td>
                 <td className="flex">
-                  <Link
-                    to={`/add-dozent/${dozent.dozent_id}`}
-                    className="btn btn-info action"
-                  >
-                    <EditIcon />
-                  </Link>
-                  <button
-                    onClick={() => deleteDozent(dozent.dozent_id)}
-                    className="btn btn-danger"
-                  >
-                    <DeleteIcon />
-                  </button>
-                </td>
+  <div className="icon-container">
+    <Link
+      to={`/add-dozent/${dozent.dozent_id}`}
+      className="btn btn-info action"
+    >
+      <EditIcon />
+    </Link>
+  </div>
+  <div className="icon-container">
+    <Link
+      onClick={() => deleteDozent(dozent.dozent_id)}
+      className="btn btn-danger action"
+    >
+      <DeleteIcon />
+    </Link>
+  </div>
+  <div className="icon-container">
+    <Link
+      to={`/dozenten/${dozent.dozent_id}`}
+      className="btn btn-success action"
+    >
+      <InfoIcon />
+    </Link>
+  </div>
+</td>
+
               </tr>
             ))}
         </tbody>

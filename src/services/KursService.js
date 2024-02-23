@@ -36,8 +36,11 @@ class KursService {
   }
 
 
-  deleteDozenten(id, kursData) {
-    return axios.put(`${link}/update_kurs_dozenzdelete/${id}`, kursData)
+  deleteDozenten(id) {
+    return axios.put(`${link}/update_kurs_dozentDelete/${id}`)
+}
+PutdeleteTNvonKurs(body){
+  return axios.put(`${link}/delete_TN_vonKurs`,body)
 }
 
 }
