@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
        
         <HeaderComponent />
-        <div className="container">
+        <div className="container main">
           <Routes>
             <Route path="/" element={<MainComponent />} />
             <Route path="/login" element={<LoginComponent />}></Route>
