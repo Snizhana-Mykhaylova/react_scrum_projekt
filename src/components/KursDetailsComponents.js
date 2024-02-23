@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import KursService from "../services/KursService";
 import teilnehmerService from "../services/TeilnehmerService";
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FormGroup, FormControlLabel, Checkbox, Button } from "@mui/material";
 
 const KursDetailsComponents = () => {
@@ -9,15 +9,15 @@ const KursDetailsComponents = () => {
   const [alleTeilnehmer, setAlleTeilnehmer] = useState([]);
   const [kurs_name, setKursName] = useState("");
   const [kurs_beschreibung, setBeschreibung] = useState("");
-  const [kurs_start_datum, setStartDatum] = useState("");
-  const [kurs_end_datum, setEndDatum] = useState("");
   const [fk_dozent_id, setDozentId] = useState("");
   const [dozent_vorname, setDozentVorname] = useState("");
   const [dozent_nachname, setDozentNachname] = useState("");
 
-  const [selectedItems, setSelectedItems] = useState("");
+  const [selectedItemsTeilnehmer, setSelectedItemsTeilnehmer] = useState([]);
+  const [selectedItemsAlleTeilnehmer, setSelectedItemsAlleTeilnehmer] =
+    useState([]);
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     getKursById(id);
@@ -27,35 +27,62 @@ const KursDetailsComponents = () => {
 
   function addTeilnehmerZuKurs(teilnehmerList, id) {
     const body = {
-      "teilnehmer_ids": teilnehmerList,
-      "k_id": id
-    }
+      teilnehmer_ids: teilnehmerList,
+      k_id: id,
+    };
     KursService.postTeilnehmerZuKurs(body)
       .then(() => {
-        (window.location.reload(true));
-    })
-    .catch((e) => console.log(e));
+        window.location.reload(true);
+      })
+      .catch((e) => console.log(e));
   }
 
-  function checkboxHandler(e) {
-    let isSelected = e.target.checked;
-    let value = parseInt( e.target.value);
+  function checkboxHandlerTeilnehmer(e) {
+    const value = parseInt(e.target.value, 10);
+    const isChecked = e.target.checked;
 
-    if (isSelected) {
-      setSelectedItems([...selectedItems, value]);
+    if (isChecked) {
+      setSelectedItemsTeilnehmer([...selectedItemsTeilnehmer, value]);
     } else {
-      setSelectedItems((prevData) => {
-        return prevData.filter((id) => {
-          return id !== value;
-        });
-      });
+      setSelectedItemsTeilnehmer(
+        selectedItemsTeilnehmer.filter((id) => id !== value)
+      );
     }
+  }
+
+  function checkboxHandlerAlleTeilnehmer(e) {
+    const value = parseInt(e.target.value, 10);
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedItemsAlleTeilnehmer([...selectedItemsAlleTeilnehmer, value]);
+    } else {
+      setSelectedItemsAlleTeilnehmer(
+        selectedItemsAlleTeilnehmer.filter((id) => id !== value)
+      );
+    }
+  }
+ 
+  function deleteTNvonKurs(teilnehmerList, id) {
+    const body = {
+      teilnehmer_ids: teilnehmerList,
+      k_id: id,
+    };
+    KursService.PutdeleteTNvonKurs(body)
+      .then(() => {
+        window.location.reload(true);
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function deleteTN() {
+    deleteTNvonKurs(selectedItemsTeilnehmer, id);
+    setSelectedItemsAlleTeilnehmer([]);
   }
 
   function submitHandler() {
-   
-    addTeilnehmerZuKurs(selectedItems, id)
-    setSelectedItems([]);
+    addTeilnehmerZuKurs(selectedItemsAlleTeilnehmer, id);
+    setSelectedItemsAlleTeilnehmer([]);
   }
 
   function getTeilnehmerVonKurs(id) {
@@ -89,117 +116,109 @@ const KursDetailsComponents = () => {
         const {
           kurs_name,
           kurs_beschreibung,
-          kurs_start_datum,
-          kurs_end_datum,
           fk_dozent_id,
           dozent_vorname,
           dozent_nachname,
-          // dozent_fachgebiet,
         } = res.data.kurse[0];
         setKursName(kurs_name);
         setBeschreibung(kurs_beschreibung);
-        setStartDatum(kurs_start_datum);
-        setEndDatum(kurs_end_datum);
         setDozentId(fk_dozent_id);
         setDozentVorname(dozent_vorname);
         setDozentNachname(dozent_nachname);
       })
       .catch((e) => console.log(e));
   }
-  
+
   return (
     <div className="container">
       <h2 className="text-center mb-6">Kurs Details</h2>
-      <table className="table table-bordered  text-center ">
-        <thead className="text-center">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Beschreibung</th>
-            {/* <th>Start</th>
-            <th>Ende</th> */}
-            <th>Dozenten ID</th>
-            <th>Dozenten</th>
-            <th>Teilnehmer ID</th>
-            <th>Teilnehmer</th>
-            <th>Teilnehmer hinzufügen</th>
-            
-          </tr>
-        </thead>
-        
-        <tbody>
-          <tr key={id} id={id}>
-            <td>{id}</td>
-            <td>{kurs_name}</td>
-            <td>{kurs_beschreibung}</td>
-            {/* <td>{kurs_start_datum}</td>
-            <td>{kurs_end_datum}</td> */}
-            <td>{fk_dozent_id}</td>
-            <td> <span>{dozent_vorname}</span><span>{" "}</span><span>{dozent_nachname}</span></td>
-            <td>{teilnehmer.map((el) => (
-                <ul>
-                  <li key={el.teilnehmer_id}>
-                    <span>{el.teilnehmer_id}</span>
-                  </li>
-                </ul>
-              ))}</td>
-            <td>
+      <div className="row">
+        <div className="col-md-12">
+          <table className="table table-bordered text-center">
+            <thead className="text-center">
+              <tr>
+                <th className="text-center">ID</th>
+                <th className="text-center">Name</th>
+                <th className="text-center col-3">Beschreibung</th>
+                {/* <th className="text-center">Do-ID</th> */}
+                <th className="text-center col-2">Dozenten & ID</th>
+                {/* <th className="text-center ">TN-ID</th> */}
+                <th className="text-center col-3">Teilnehmer & ID</th>
+                <th className=" text-center col-3">Teilnehmer hinzufügen</th>
+              </tr>
+            </thead>
 
-            <FormGroup>
-                {teilnehmer.map((el) => (
-                <FormControlLabel
-                control={
-                  <Checkbox
-                    key={el.teilnehmer_id}
-                    value={el.teilnehmer_id}
-                    // onChange={checkboxHandler}
-                    // checked={selectedItems.includes(el.teilnehmer_id)}
-                  />
-                }
-                key={el.teilnehmer_id}
-                label={el.teilnehmer_vorname}
-              />
-                
-                  // <li key={el.teilnehmer_id}>
-                  //   <span>{el.teilnehmer_vorname}</span>
-                  //   <span>{el.teilnehmer_nachname}</span>
-                  // </li>
-       
-          
-              ))}
-             </FormGroup>
-              <Button variant="outlined">
-                Löschen
-              </Button>
-
-            </td>
-            <td>
-              {" "}
-              <FormGroup>
-                {alleTeilnehmer.map((el) => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
+            <tbody>
+              <tr key={id} id={id}>
+                <td>{id}</td>
+                <td>{kurs_name}</td>
+                <td>{kurs_beschreibung}</td>
+                <td>       {fk_dozent_id}-{dozent_vorname} {dozent_nachname}</td>
+                {/* <td>
+                  <span>{dozent_vorname}</span>
+                  <span> </span>
+                  <span>{dozent_nachname}</span>
+                </td> */}
+                {/* <td>
+                  {teilnehmer.map((el) => (
+                    <ul key={el.teilnehmer_id}>
+                      <li>
+                        <span>{el.teilnehmer_id}</span>
+                      </li>
+                    </ul>
+                  ))}
+                </td> */}
+                <td>
+                  <FormGroup>
+                    {teilnehmer.map((el) => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            key={el.teilnehmer_id}
+                            value={el.teilnehmer_id}
+                            checked={selectedItemsTeilnehmer.includes(
+                              el.teilnehmer_id
+                            )}
+                            onChange={checkboxHandlerTeilnehmer}
+                          />
+                        }
                         key={el.teilnehmer_id}
-                        value={el.teilnehmer_id}
-                        onChange={checkboxHandler}
-                        checked={selectedItems.includes(el.teilnehmer_id)}
+                        label={`${el.teilnehmer_id}-${el.teilnehmer_vorname} ${el.teilnehmer_nachname}`}
                       />
-                    }
-                    key={el.teilnehmer_id}
-                    label={el.teilnehmer_vorname}
-                  />
-                ))}
-
-                <Button onClick={submitHandler} variant="outlined">
-                  Hinzufügen
-                </Button>
-              </FormGroup>
-            </td>
-          </tr>
-        
-        </tbody>
-      </table>
+                    ))}
+                    <Button onClick={deleteTN} variant="outlined">
+                      Löschen
+                    </Button>
+                  </FormGroup>
+                </td>
+                <td>
+                  <FormGroup>
+                    {alleTeilnehmer.map((el) => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            key={el.teilnehmer_id}
+                            value={el.teilnehmer_id}
+                            onChange={checkboxHandlerAlleTeilnehmer}
+                            checked={selectedItemsAlleTeilnehmer.includes(
+                              el.teilnehmer_id
+                            )}
+                          />
+                        }
+                        key={el.teilnehmer_id}
+                        label={`${el.teilnehmer_vorname} ${el.teilnehmer_nachname}`}
+                      />
+                    ))}
+                    <Button onClick={submitHandler} variant="outlined">
+                      Hinzufügen
+                    </Button>
+                  </FormGroup>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

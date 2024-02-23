@@ -26,7 +26,6 @@ const AddKursComponent = () => {
           console.log(res);
           if (res.data.kurse || res.data.kurse.length > 0) {
             const {
-
               kurs_name,
               kurs_beschreibung,
               fk_dozent_id,
@@ -39,14 +38,12 @@ const AddKursComponent = () => {
             setDozentVorname(dozent_vorname);
             setDozentNachname(dozent_nachname);
           } else {
-          
             console.log("keine kursdaten");
           }
         })
         .catch((e) => console.log(e));
     }
   }, [id]);
-  
 
   const kursDataDozentDelete = {
     kurs_name,
@@ -54,40 +51,21 @@ const AddKursComponent = () => {
     fk_dozent_id,
   };
 
-  function zurucksetzen(e){
+  function zurucksetzen(e) {
     e.preventDefault();
 
-    if (kurs_name !== "" &&
-     kurs_beschreibung !== "" 
-  
-      ) {
-      if (id) {
-        KursService.deleteDozenten(id, kursDataDozentDelete
-        
-          )
-          .then(() => {
-            navigate("/kurse");
-          })
-          .catch((e) => console.log(e));
-      } else {
-        KursService.speicherKurs(kursData)
-          .then(() => {
-            navigate("/kurse");
-          })
-          .catch((e) => console.log(e));
-      }
-    } else {
-      alert("Bitte füllen Sie alle Felder aus");
+    if (id) {
+      KursService.deleteDozenten(id)
+        .then(() => {
+          navigate("/kurse");
+        })
+        .catch((e) => console.log(e));
     }
-
   }
   function speicherKurs(e) {
     e.preventDefault();
 
-    if (kurs_name !== "" &&
-     kurs_beschreibung !== "" 
-  
-      ) {
+    if (kurs_name !== "" && kurs_beschreibung !== "") {
       if (id) {
         KursService.updateKurs(id, kursData)
           .then(() => {
@@ -166,7 +144,7 @@ const AddKursComponent = () => {
                     value={fk_dozent_id}
                     onChange={(e) => setDozentId(e.target.value)}
                     type="text"
-                     readOnly
+                    readOnly
                     placeholder="DozentenId"
                   />
                 </div>
