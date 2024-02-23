@@ -36,6 +36,7 @@ class KursService {
   }
 
 
+
   deleteDozenten(id) {
     return axios.put(`${link}/update_kurs_dozentDelete/${id}`)
 }
