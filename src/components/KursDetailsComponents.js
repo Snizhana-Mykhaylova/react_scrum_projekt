@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import KursService from "../services/KursService";
 import teilnehmerService from "../services/TeilnehmerService";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { FormGroup, FormControlLabel, Checkbox, Button } from "@mui/material";
+import { NotificationContainer } from 'react-notifications';
+import Notification from "./NotificationComponent"
 
 const KursDetailsComponents = () => {
   const [teilnehmer, setTeilnehmer] = useState([]);
@@ -17,7 +19,7 @@ const KursDetailsComponents = () => {
   const [selectedItemsAlleTeilnehmer, setSelectedItemsAlleTeilnehmer] =
     useState([]);
   const { id } = useParams();
-  // const navigate = useNavigate();
+
 
   useEffect(() => {
     getKursById(id);
@@ -26,6 +28,7 @@ const KursDetailsComponents = () => {
   }, [id]);
 
   function addTeilnehmerZuKurs(teilnehmerList, id) {
+
     const body = {
       teilnehmer_ids: teilnehmerList,
       k_id: id,
@@ -34,7 +37,7 @@ const KursDetailsComponents = () => {
       .then(() => {
         window.location.reload(true);
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>  console.log(e));
   }
 
   function checkboxHandlerTeilnehmer(e) {
@@ -72,7 +75,7 @@ const KursDetailsComponents = () => {
       .then(() => {
         window.location.reload(true);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {console.log(e)});
   }
 
   function deleteTN() {
@@ -81,6 +84,16 @@ const KursDetailsComponents = () => {
   }
 
   function submitHandler() {
+
+    selectedItemsAlleTeilnehmer.map(el => {
+      teilnehmer.map(teilnehmerVonKurs => {
+        if (teilnehmerVonKurs.teilnehmer_id == el) {
+          Notification.createNotification("error");
+          console.log("error");
+
+        }
+      })    
+    })
     addTeilnehmerZuKurs(selectedItemsAlleTeilnehmer, id);
     setSelectedItemsAlleTeilnehmer([]);
   }
@@ -94,7 +107,7 @@ const KursDetailsComponents = () => {
           setTeilnehmer(res.data);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {console.log(e)});
   }
 
   function getAlleTeilnehmer() {
@@ -107,7 +120,7 @@ const KursDetailsComponents = () => {
           setAlleTeilnehmer(res.data);
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {Notification.createNotification('error'); console.log(e)});
   }
 
   function getKursById(id) {
@@ -126,7 +139,7 @@ const KursDetailsComponents = () => {
         setDozentVorname(dozent_vorname);
         setDozentNachname(dozent_nachname);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {Notification.createNotification('error'); console.log(e)});
   }
 
   return (
@@ -153,21 +166,7 @@ const KursDetailsComponents = () => {
                 <td>{id}</td>
                 <td>{kurs_name}</td>
                 <td>{kurs_beschreibung}</td>
-                <td>       {fk_dozent_id}-{dozent_vorname} {dozent_nachname}</td>
-                {/* <td>
-                  <span>{dozent_vorname}</span>
-                  <span> </span>
-                  <span>{dozent_nachname}</span>
-                </td> */}
-                {/* <td>
-                  {teilnehmer.map((el) => (
-                    <ul key={el.teilnehmer_id}>
-                      <li>
-                        <span>{el.teilnehmer_id}</span>
-                      </li>
-                    </ul>
-                  ))}
-                </td> */}
+                <td>{fk_dozent_id}-{dozent_vorname} {dozent_nachname}</td>
                 <td>
                   <FormGroup>
                     {teilnehmer.map((el) => (
@@ -219,6 +218,11 @@ const KursDetailsComponents = () => {
           </table>
         </div>
       </div>
+      <Button onClick={Notification.createNotification("error")} variant="outlined">
+                     Error
+                    </Button>
+      <NotificationContainer />
+    
     </div>
   );
 };

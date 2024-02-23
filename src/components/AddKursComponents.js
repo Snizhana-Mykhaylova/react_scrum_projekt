@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import KursService from "../services/KursService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+
+
 const AddKursComponent = () => {
   const [kurs_name, setKursName] = useState("");
   const [kurs_beschreibung, setBeschreibung] = useState("");
@@ -120,31 +122,13 @@ const AddKursComponent = () => {
                     placeholder="Beschreibung"
                   />
                 </div>
-                {/* <div className="form-group mb-2">
-                  <input
-                    className="form-control"
-                    value={kurs_start_datum}
-                    onChange={(e) => setStartDatum(e.target.value)}
-                    type="date"
-                    placeholder="Start"
-                  />
-                </div>
-                <div className="form-group mb-2">
-                  <input
-                    className="form-control"
-                    value={kurs_end_datum}
-                    onChange={(e) => setEndDatum(e.target.value)}
-                    type="date"
-                    placeholder="Ende"
-                  />
-                </div> */}
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
                     value={fk_dozent_id}
                     onChange={(e) => setDozentId(e.target.value)}
                     type="text"
-                    readOnly
+                    // readOnly
                     placeholder="DozentenId"
                   />
                 </div>
